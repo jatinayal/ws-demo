@@ -1,0 +1,82 @@
+import { buildConfig } from 'payload';
+import { postgresAdapter } from '@payloadcms/db-postgres';
+import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import sharp from 'sharp';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+import { Users } from './collections/Users';
+import { Media } from './collections/Media';
+import { Programs } from './collections/Programs';
+import { Events } from './collections/Events';
+import { SuccessStories } from './collections/SuccessStories';
+import { Gallery } from './collections/Gallery';
+import { Volunteers } from './collections/Volunteers';
+import { DonationLeads } from './collections/DonationLeads';
+import { ContactRequests } from './collections/ContactRequests';
+import { Partners } from './collections/Partners';
+import { PartnershipRequests } from './collections/PartnershipRequests';
+import { ImpactStatistics } from './collections/ImpactStatistics';
+import { NewsletterSubscribers } from './collections/NewsletterSubscribers';
+import { EventRegistrations } from './collections/EventRegistrations';
+
+import { SiteSettings } from './globals/SiteSettings';
+import { Homepage } from './globals/Homepage';
+import { Navigation } from './globals/Navigation';
+import { AboutUs } from './globals/AboutUs';
+import { ImpactPage } from './globals/ImpactPage';
+import { GetInvolved } from './globals/GetInvolved';
+import { ContactPage } from './globals/ContactPage';
+
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
+
+export default buildConfig({
+  admin: {
+    user: Users.slug,
+
+    meta: {
+      titleSuffix: "- Women's Synergy",
+      icons: [
+        {
+          rel: "icon",
+          type: "image/png",
+          url: "/logo.png",
+        },
+      ],
+    },
+  },
+  editor: lexicalEditor(),
+  collections: [
+    Users,
+    Media,
+    Programs,
+    Events,
+    EventRegistrations,
+    SuccessStories,
+    Gallery,
+    Volunteers,
+    DonationLeads,
+    ContactRequests,
+    Partners,
+    PartnershipRequests,
+    ImpactStatistics,
+    NewsletterSubscribers,
+  ],
+  globals: [
+    SiteSettings,
+    Homepage,
+    Navigation,
+    AboutUs,
+    ImpactPage,
+    GetInvolved,
+    ContactPage,
+  ],
+  secret: process.env.PAYLOAD_SECRET || '',
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || '',
+    },
+  }),
+  sharp,
+});
