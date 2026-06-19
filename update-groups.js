@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
 
@@ -33,12 +34,15 @@ for (const [relPath, newGroup] of Object.entries(mappings)) {
   const fullPath = path.join(__dirname, 'src', relPath);
   if (fs.existsSync(fullPath)) {
     let content = fs.readFileSync(fullPath, 'utf8');
-    
+
     // Specifically handle SiteSettings which has `group: 'Site Configuration'` in admin and `group: 'Site Configuration', description...` inside fields
     if (relPath === 'globals/SiteSettings.ts') {
-        content = content.replace(/admin:\s*\{\s*group:\s*['"].*?['"]/g, `admin: {\n    group: '${newGroup}'`);
+      content = content.replace(
+        /admin:\s*\{\s*group:\s*['"].*?['"]/g,
+        `admin: {\n    group: '${newGroup}'`,
+      );
     } else {
-        content = content.replace(/group:\s*['"].*?['"]/g, `group: '${newGroup}'`);
+      content = content.replace(/group:\s*['"].*?['"]/g, `group: '${newGroup}'`);
     }
     fs.writeFileSync(fullPath, content, 'utf8');
     console.log(`Updated ${relPath} -> ${newGroup}`);

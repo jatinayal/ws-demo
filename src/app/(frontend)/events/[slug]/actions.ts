@@ -1,7 +1,6 @@
 'use server';
 
 import { getPayloadClient } from '@/lib/payload';
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 export async function submitEventRegistration(formData: FormData) {
@@ -27,7 +26,7 @@ export async function submitEventRegistration(formData: FormData) {
     const newRegistration = await payload.create({
       collection: 'event-registrations',
       data: {
-        event: eventId as any,
+        event: eventId,
         name,
         email,
         phone,
@@ -39,10 +38,10 @@ export async function submitEventRegistration(formData: FormData) {
     console.error('Failed to register for event:', error);
     // Log structured details if error is a ValidationError
     if (error && typeof error === 'object' && 'data' in error) {
-       console.error('Validation Error details:', (error as any).data);
+      console.error('Validation Error details:', (error as { data?: unknown }).data);
     }
     redirect('?error=registration_failed');
   }
-  
+
   redirect('?success=true');
 }
