@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { Client } = require('pg');
 const dotenv = require('dotenv');
 const path = require('path');
@@ -17,10 +18,10 @@ async function resetDB() {
   try {
     await client.connect();
     console.log('Connected successfully. Dropping public schema...');
-    
+
     await client.query('DROP SCHEMA public CASCADE;');
     await client.query('CREATE SCHEMA public;');
-    
+
     console.log('Database reset successfully! The public schema is now clean.');
   } catch (err) {
     console.error('Error resetting database:', err.message);

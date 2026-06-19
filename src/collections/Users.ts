@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import { isAdmin, isAdminOrSelf, anyAuthenticatedUser, isAdminOrSelfField } from '../access';
+import { isAdmin, isAdminField, isAdminOrSelf, anyAuthenticatedUser } from '../access';
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -39,13 +39,14 @@ export const Users: CollectionConfig = {
         { label: 'Viewer', value: 'viewer' },
       ],
       access: {
-        create: isAdmin,
-        update: isAdmin,
+        create: isAdminField,
+        update: isAdminField,
       },
       required: true,
       admin: {
-        description: 'Super Admins have full access. Content Managers manage website content. Volunteer/Partnership Managers handle engagement leads. Viewers can only read.',
-      }
+        description:
+          'Super Admins have full access. Content Managers manage website content. Volunteer/Partnership Managers handle engagement leads. Viewers can only read.',
+      },
     },
     {
       name: 'status',
@@ -56,11 +57,11 @@ export const Users: CollectionConfig = {
         { label: 'Inactive', value: 'inactive' },
       ],
       access: {
-        update: isAdmin,
+        update: isAdminField,
       },
       admin: {
         description: 'Inactive users cannot perform operations they normally would.',
-      }
-    }
+      },
+    },
   ],
 };

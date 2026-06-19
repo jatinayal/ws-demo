@@ -3,7 +3,7 @@ import { isContentManager, publicReadAccess } from '../access';
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
-    access: {
+  access: {
     read: publicReadAccess,
     update: isContentManager,
   },
@@ -43,12 +43,15 @@ export const SiteSettings: GlobalConfig = {
       name: 'workingHours',
       type: 'text',
       admin: {
-    group: 'System Settings', description: 'e.g., Mon - Fri: 9:00 AM - 5:00 PM' },
+        description: 'e.g., Mon - Fri: 9:00 AM - 5:00 PM',
+      },
     },
     {
       name: 'mapEmbedUrl',
       type: 'text',
-      admin: { description: 'Google Maps embed URL src (e.g., https://www.google.com/maps/embed?pb=...)' },
+      admin: {
+        description: 'Google Maps embed URL src (e.g., https://www.google.com/maps/embed?pb=...)',
+      },
     },
     {
       name: 'donationUrl',

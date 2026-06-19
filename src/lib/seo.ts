@@ -1,40 +1,32 @@
 import type { Metadata } from 'next';
 import { getSiteSettings } from './payload';
 
-interface SEOProps {
+export interface SEOProps {
   title?: string;
   description?: string;
   image?: string;
+  url?: string;
   path?: string;
 }
 
-export const constructMetadata = async (
-  options: {
-    title?: string;
-    description?: string;
-    image?: string;
-    url?: string;
-    path?: string;
-  } = {}
-): Promise<Metadata> => {
+export const constructMetadata = async (options: SEOProps = {}): Promise<Metadata> => {
   const siteSettings = await getSiteSettings();
 
-  const {
-    title: customTitle,
-    description: customDescription,
-    image: customImage,
-    url,
-  } = options;
+  const { title: customTitle, description: customDescription, image: customImage, url } = options;
 
-  const defaultTitle = siteSettings?.seoDefaultTitle || siteSettings?.organizationName || "Women's Synergy";
+  const defaultTitle =
+    siteSettings?.seoDefaultTitle || siteSettings?.organizationName || "Women's Synergy";
   const title = customTitle ? `${customTitle} | ${defaultTitle}` : defaultTitle;
-  
-  const description = customDescription || siteSettings?.seoDefaultDescription || "Empowering women worldwide to achieve their full potential.";
-  
-  const ogImage = customImage 
-    ? customImage 
-    : (typeof siteSettings?.seoDefaultImage === 'object' && siteSettings?.seoDefaultImage?.url)
-      ? siteSettings.seoDefaultImage.url 
+
+  const description =
+    customDescription ||
+    siteSettings?.seoDefaultDescription ||
+    'Empowering women worldwide to achieve their full potential.';
+
+  const ogImage = customImage
+    ? customImage
+    : typeof siteSettings?.seoDefaultImage === 'object' && siteSettings?.seoDefaultImage?.url
+      ? siteSettings.seoDefaultImage.url
       : '/logo.png';
 
   const res: Metadata = {

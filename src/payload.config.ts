@@ -2,8 +2,6 @@ import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import sharp from 'sharp';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 import { Users } from './collections/Users';
 import { Media } from './collections/Media';
@@ -28,9 +26,6 @@ import { ImpactPage } from './globals/ImpactPage';
 import { GetInvolved } from './globals/GetInvolved';
 import { ContactPage } from './globals/ContactPage';
 
-const filename = fileURLToPath(import.meta.url);
-const dirname = path.dirname(filename);
-
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -39,9 +34,9 @@ export default buildConfig({
       titleSuffix: "- Women's Synergy",
       icons: [
         {
-          rel: "icon",
-          type: "image/png",
-          url: "/logo.png",
+          rel: 'icon',
+          type: 'image/png',
+          url: '/logo.png',
         },
       ],
     },
@@ -63,15 +58,7 @@ export default buildConfig({
     ImpactStatistics,
     NewsletterSubscribers,
   ],
-  globals: [
-    SiteSettings,
-    Homepage,
-    Navigation,
-    AboutUs,
-    ImpactPage,
-    GetInvolved,
-    ContactPage,
-  ],
+  globals: [SiteSettings, Homepage, Navigation, AboutUs, ImpactPage, GetInvolved, ContactPage],
   secret: process.env.PAYLOAD_SECRET || '',
   db: postgresAdapter({
     pool: {

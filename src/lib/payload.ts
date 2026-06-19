@@ -10,8 +10,8 @@ export const getPayloadClient = cache(async () => {
 export const getSiteSettings = cache(async () => {
   const payload = await getPayloadClient();
   try {
-    return await payload.findGlobal({ 
-      slug: 'site-settings', 
+    return await payload.findGlobal({
+      slug: 'site-settings',
       depth: 1,
       select: {
         organizationName: true,
@@ -24,37 +24,37 @@ export const getSiteSettings = cache(async () => {
         workingHours: true,
         mapEmbedUrl: true,
         seo: true,
-      }
+      },
     });
-  } catch (error) {
+  } catch {
     console.warn('Fallback: site_settings table not ready yet.');
-    return { organizationName: "Women's Synergy", seo: {}, socialLinks: [] } as any;
+    return { organizationName: "Women's Synergy", seo: {}, socialLinks: [] } as never;
   }
 });
 
 export const getNavigation = cache(async () => {
   const payload = await getPayloadClient();
   try {
-    return await payload.findGlobal({ 
-      slug: 'navigation', 
+    return await payload.findGlobal({
+      slug: 'navigation',
       depth: 1,
       select: {
         mainMenu: true,
         footerMenu: true,
         announcementBar: true,
-      }
+      },
     });
-  } catch (error) {
+  } catch {
     console.warn('Fallback: navigation table not ready yet.');
-    return { mainMenu: [], footerMenu: [], announcementBar: { enabled: false } } as any;
+    return { mainMenu: [], footerMenu: [], announcementBar: { enabled: false } } as never;
   }
 });
 
 export const getHomepage = cache(async () => {
   const payload = await getPayloadClient();
   try {
-    return await payload.findGlobal({ 
-      slug: 'homepage', 
+    return await payload.findGlobal({
+      slug: 'homepage',
       depth: 2,
       select: {
         hero: true,
@@ -65,11 +65,11 @@ export const getHomepage = cache(async () => {
         eventsSection: true,
         partnersSection: true,
         donationCta: true,
-      }
+      },
     });
-  } catch (error) {
+  } catch {
     console.warn('Fallback: homepage table not ready yet.');
-    return {} as any;
+    return {} as never;
   }
 });
 
@@ -77,9 +77,9 @@ export const getAboutUs = cache(async () => {
   const payload = await getPayloadClient();
   try {
     return await payload.findGlobal({ slug: 'about-us', depth: 2 });
-  } catch (error) {
+  } catch {
     console.warn('Fallback: about_us table not ready yet.');
-    return {} as any;
+    return {} as never;
   }
 });
 
@@ -87,9 +87,9 @@ export const getImpactPage = cache(async () => {
   const payload = await getPayloadClient();
   try {
     return await payload.findGlobal({ slug: 'impact-page', depth: 2 });
-  } catch (error) {
+  } catch {
     console.warn('Fallback: impact_page table not ready yet.');
-    return {} as any;
+    return {} as never;
   }
 });
 
@@ -97,9 +97,9 @@ export const getGetInvolved = cache(async () => {
   const payload = await getPayloadClient();
   try {
     return await payload.findGlobal({ slug: 'get-involved', depth: 1 });
-  } catch (error) {
+  } catch {
     console.warn('Fallback: get_involved table not ready yet.');
-    return {} as any;
+    return {} as never;
   }
 });
 
@@ -107,8 +107,8 @@ export const getContactPage = cache(async () => {
   const payload = await getPayloadClient();
   try {
     return await payload.findGlobal({ slug: 'contact-page', depth: 1 });
-  } catch (error) {
+  } catch {
     console.warn('Fallback: contact_page table not ready yet.');
-    return {} as any;
+    return {} as never;
   }
 });

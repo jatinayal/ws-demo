@@ -11,64 +11,71 @@ export async function generateMetadata() {
   const data = await getGetInvolved();
   return constructMetadata({
     title: 'Get Involved',
-    description: data.hero?.subtitle || 'Take Action. Drive Change. Join Women\'s Synergy.',
+    description: data.hero?.subtitle || "Take Action. Drive Change. Join Women's Synergy.",
     path: '/get-involved',
   });
 }
 
 export default async function GetInvolvedPage() {
   const data = await getGetInvolved();
-  const heroImage = typeof data.hero?.backgroundImage === 'object' ? data.hero.backgroundImage?.url : null;
+  const heroImage =
+    typeof data.hero?.backgroundImage === 'object' ? data.hero.backgroundImage?.url : null;
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="bg-background flex min-h-screen flex-col">
       {/* 1. Hero */}
-      <HeroSection 
+      <HeroSection
         title={data.hero?.title || 'Take Action. Drive Change.'}
-        subtitle={data.hero?.subtitle || 'Join Women\'s Synergy in our mission to empower women and transform communities.'}
+        subtitle={
+          data.hero?.subtitle ||
+          "Join Women's Synergy in our mission to empower women and transform communities."
+        }
         backgroundImage={heroImage}
       />
 
       {/* 2. Main Content & Forms */}
-      <section className="py-20 md:py-32 relative z-20">
+      <section className="relative z-20 py-20 md:py-32">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-            
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-20">
             {/* Context/Information Side */}
-            <div className="lg:col-span-5 space-y-16">
-              
+            <div className="space-y-16 lg:col-span-5">
               <AnimatedSection direction="up">
-                <h2 className="text-3xl font-bold mb-4">{data.volunteerSection?.title}</h2>
-                <p className="text-muted-foreground text-lg mb-6">{data.volunteerSection?.description}</p>
+                <h2 className="mb-4 text-3xl font-bold">{data.volunteerSection?.title}</h2>
+                <p className="text-muted-foreground mb-6 text-lg">
+                  {data.volunteerSection?.description}
+                </p>
                 <ul className="space-y-4">
-                  {data.volunteerSection?.benefits?.map((item: any, idx: number) => (
-                    <li key={idx} className="flex items-start">
-                      <CheckCircle className="w-6 h-6 text-primary mr-3 shrink-0 mt-0.5" />
-                      <span className="font-medium text-foreground">{item.benefit}</span>
-                    </li>
-                  ))}
+                  {data.volunteerSection?.benefits?.map(
+                    (item: { benefit?: string | null }, idx: number) => (
+                      <li key={idx} className="flex items-start">
+                        <CheckCircle className="text-primary mt-0.5 mr-3 h-6 w-6 shrink-0" />
+                        <span className="text-foreground font-medium">{item.benefit}</span>
+                      </li>
+                    ),
+                  )}
                 </ul>
               </AnimatedSection>
 
               <AnimatedSection direction="up" delay={0.1}>
-                <div className="bg-primary/5 rounded-3xl p-8 border border-primary/10">
-                  <h2 className="text-2xl font-bold mb-4 flex items-center">
-                    <Building2 className="w-6 h-6 mr-3 text-primary" />
+                <div className="bg-primary/5 border-primary/10 rounded-3xl border p-8">
+                  <h2 className="mb-4 flex items-center text-2xl font-bold">
+                    <Building2 className="text-primary mr-3 h-6 w-6" />
                     {data.partnerSection?.title}
                   </h2>
                   <p className="text-muted-foreground mb-6">{data.partnerSection?.description}</p>
-                  
+
                   <div className="space-y-6">
-                    {data.partnerSection?.partnerTypes?.map((pt: any, idx: number) => (
-                      <div key={idx}>
-                        <h4 className="font-bold text-foreground">{pt.type}</h4>
-                        <p className="text-sm text-muted-foreground mt-1">{pt.description}</p>
-                      </div>
-                    ))}
+                    {data.partnerSection?.partnerTypes?.map(
+                      (pt: { type?: string | null; description?: string | null }, idx: number) => (
+                        <div key={idx}>
+                          <h4 className="text-foreground font-bold">{pt.type}</h4>
+                          <p className="text-muted-foreground mt-1 text-sm">{pt.description}</p>
+                        </div>
+                      ),
+                    )}
                   </div>
                 </div>
               </AnimatedSection>
-
             </div>
 
             {/* Interactive Forms Side */}
@@ -77,39 +84,41 @@ export default async function GetInvolvedPage() {
                 <GetInvolvedForms />
               </AnimatedSection>
             </div>
-
           </div>
         </Container>
       </section>
 
       {/* 3. FAQs */}
       {data.faqs && data.faqs.length > 0 && (
-        <section className="py-24 bg-muted/30 border-t">
+        <section className="bg-muted/30 border-t py-24">
           <Container>
-            <AnimatedSection direction="up" className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-              <p className="text-muted-foreground">Everything you need to know about getting involved with Women's Synergy.</p>
+            <AnimatedSection direction="up" className="mx-auto mb-16 max-w-3xl text-center">
+              <h2 className="mb-4 text-3xl font-bold">Frequently Asked Questions</h2>
+              <p className="text-muted-foreground">
+                Everything you need to know about getting involved with Women&apos;s Synergy.
+              </p>
             </AnimatedSection>
-            
-            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-              {data.faqs.map((faq: any, idx: number) => (
-                <AnimatedSection key={idx} direction="up" delay={idx * 0.1}>
-                  <div className="bg-card rounded-2xl p-6 border border-border/50 h-full">
-                    <div className="flex items-start">
-                      <HelpCircle className="w-6 h-6 text-primary mr-4 shrink-0 mt-0.5" />
-                      <div>
-                        <h4 className="font-bold text-lg mb-2">{faq.question}</h4>
-                        <p className="text-muted-foreground">{faq.answer}</p>
+
+            <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
+              {data.faqs.map(
+                (faq: { question?: string | null; answer?: string | null }, idx: number) => (
+                  <AnimatedSection key={idx} direction="up" delay={idx * 0.1}>
+                    <div className="bg-card border-border/50 h-full rounded-2xl border p-6">
+                      <div className="flex items-start">
+                        <HelpCircle className="text-primary mt-0.5 mr-4 h-6 w-6 shrink-0" />
+                        <div>
+                          <h4 className="mb-2 text-lg font-bold">{faq.question}</h4>
+                          <p className="text-muted-foreground">{faq.answer}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </AnimatedSection>
-              ))}
+                  </AnimatedSection>
+                ),
+              )}
             </div>
           </Container>
         </section>
       )}
-
     </div>
   );
 }

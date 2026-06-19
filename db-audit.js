@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { Client } = require('pg');
 const dotenv = require('dotenv');
 const path = require('path');
@@ -19,7 +20,7 @@ async function auditDB() {
       FROM information_schema.tables
       WHERE table_schema = 'public'
     `);
-    
+
     for (let row of tablesRes.rows) {
       const countRes = await client.query(`SELECT COUNT(*) FROM "${row.table_name}"`);
       console.log(`Table: ${row.table_name} | Rows: ${countRes.rows[0].count}`);
@@ -36,7 +37,7 @@ async function auditDB() {
       WHERE n.nspname = 'public'
       GROUP BY t.typname;
     `);
-    
+
     for (let row of enumsRes.rows) {
       console.log(`Enum: ${row.enum_name} | Values: [${row.enum_values}]`);
     }
@@ -58,7 +59,6 @@ async function auditDB() {
       WHERE schemaname = 'public';
     `);
     console.log(`Total Indexes: ${idxRes.rows[0].total_indexes}`);
-
   } catch (err) {
     console.error('Audit Error:', err.message);
   } finally {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
 
@@ -34,12 +35,12 @@ const groupings = {
 
 const dirs = ['src/collections', 'src/globals'];
 
-dirs.forEach(dir => {
+dirs.forEach((dir) => {
   const fullPath = path.join(__dirname, dir);
   if (!fs.existsSync(fullPath)) return;
 
   const files = fs.readdirSync(fullPath);
-  files.forEach(file => {
+  files.forEach((file) => {
     if (file.endsWith('.ts') && groupings[file]) {
       const filePath = path.join(fullPath, file);
       let content = fs.readFileSync(filePath, 'utf-8');
@@ -53,9 +54,12 @@ dirs.forEach(dir => {
         }
       } else {
         // Inject admin block after slug:
-        content = content.replace(/slug:\s*['"][^'"]+['"],/, `$& \n  admin: {\n    group: '${group}',\n  },`);
+        content = content.replace(
+          /slug:\s*['"][^'"]+['"],/,
+          `$& \n  admin: {\n    group: '${group}',\n  },`,
+        );
       }
-      
+
       fs.writeFileSync(filePath, content, 'utf-8');
     }
   });

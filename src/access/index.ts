@@ -1,16 +1,23 @@
 import type { Access, FieldAccess } from 'payload';
 
-export type Role = 'super_admin' | 'content_manager' | 'volunteer_manager' | 'partnership_manager' | 'viewer';
+export type Role =
+  | 'super_admin'
+  | 'content_manager'
+  | 'volunteer_manager'
+  | 'partnership_manager'
+  | 'viewer';
 
-export const checkRole = (allRoles: Role[], user: any = {}): boolean => {
-  if (user?.roles) {
-    return allRoles.some((role) => user.roles.includes(role));
+export const checkRole = (allRoles: Role[], user: unknown = null): boolean => {
+  const u = user as { roles?: string[] } | null;
+  if (u?.roles) {
+    return allRoles.some((role) => u.roles?.includes(role));
   }
   return false;
 };
 
 // Admins have access to everything
 export const isAdmin: Access = ({ req: { user } }) => checkRole(['super_admin'], user);
+export const isAdminField: FieldAccess = ({ req: { user } }) => checkRole(['super_admin'], user);
 
 // Access for general reading (viewers + specific roles)
 export const isAdminOrHasRole = (roles: Role[]): Access => {

@@ -7,9 +7,7 @@ import { LightboxGallery } from '@/components/shared/LightboxGallery';
 import { CTASection } from '@/components/shared/CTASection';
 import { constructMetadata } from '@/lib/seo';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, ArrowRight, BookOpen } from 'lucide-react';
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { ArrowLeft, Calendar, BookOpen } from 'lucide-react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 
 interface GalleryAlbumPageProps {
@@ -41,7 +39,7 @@ export async function generateMetadata({ params }: GalleryAlbumPageProps) {
 export default async function GalleryAlbumPage({ params }: GalleryAlbumPageProps) {
   const { slug } = await params;
   const payload = await getPayloadClient();
-  
+
   const albums = await payload.find({
     collection: 'gallery',
     where: { slug: { equals: slug }, albumStatus: { equals: 'published' } },
@@ -58,65 +56,87 @@ export default async function GalleryAlbumPage({ params }: GalleryAlbumPageProps
 
   // Format images for the LightboxGallery component
   const galleryImages = (album.images || [])
-    .map((item: any) => {
-      if (typeof item.image !== 'object' || !item.image?.url) return null;
-      return {
-        url: item.image.url,
-        alt: item.image.alt || item.caption || album.title,
-        caption: item.caption,
-        width: item.image.width || 800,
-        height: item.image.height || 600,
-      };
-    })
+    .map(
+      (item: {
+        image?: { url?: string; alt?: string; width?: number; height?: number } | string | null;
+        caption?: string | null;
+      }) => {
+        if (typeof item.image !== 'object' || !item.image?.url) return null;
+        return {
+          url: item.image.url,
+          alt: item.image.alt || item.caption || album.title,
+          caption: item.caption,
+          width: item.image.width || 800,
+          height: item.image.height || 600,
+        };
+      },
+    )
     .filter(Boolean);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="bg-background flex min-h-screen flex-col">
       {/* 1. Header Section */}
-      <section className="pt-32 pb-16 md:pt-48 md:pb-24 bg-muted/30 border-b">
+      <section className="bg-muted/30 border-b pt-32 pb-16 md:pt-48 md:pb-24">
         <Container>
           <AnimatedSection direction="up" className="max-w-4xl">
-            <Link href="/gallery" className="inline-flex items-center text-primary font-semibold hover:underline mb-8">
-              <ArrowLeft className="w-4 h-4 mr-2" /> Back to Gallery
+            <Link
+              href="/gallery"
+              className="text-primary mb-8 inline-flex items-center font-semibold hover:underline"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Gallery
             </Link>
-            
-            <div className="flex flex-wrap gap-3 mb-6">
-              <span className="bg-primary/10 text-primary border border-primary/20 text-sm font-bold px-4 py-1.5 rounded-full capitalize">
+
+            <div className="mb-6 flex flex-wrap gap-3">
+              <span className="bg-primary/10 text-primary border-primary/20 rounded-full border px-4 py-1.5 text-sm font-bold capitalize">
                 {album.category}
               </span>
-              <span className="bg-card text-foreground border border-border text-sm font-bold px-4 py-1.5 rounded-full">
+              <span className="bg-card text-foreground border-border rounded-full border px-4 py-1.5 text-sm font-bold">
                 {galleryImages.length} {galleryImages.length === 1 ? 'Photo' : 'Photos'}
               </span>
             </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 tracking-tight">
+
+            <h1 className="mb-8 text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">
               {album.title}
             </h1>
-            
+
             {album.description && (
-              <div className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed max-w-3xl mb-10">
+              <div className="prose prose-lg dark:prose-invert text-muted-foreground mb-10 max-w-3xl leading-relaxed">
                 <RichText data={album.description} />
               </div>
             )}
-            
+
             {(event || program) && (
-              <div className="flex flex-wrap gap-4 pt-8 border-t border-border">
+              <div className="border-border flex flex-wrap gap-4 border-t pt-8">
                 {event && (
-                  <Link href={`/events/${event.slug}`} className="flex items-center bg-card border border-border/50 px-5 py-3 rounded-xl hover:shadow-md transition-all group">
-                    <Calendar className="w-5 h-5 text-primary mr-3" />
+                  <Link
+                    href={`/events/${event.slug}`}
+                    className="bg-card border-border/50 group flex items-center rounded-xl border px-5 py-3 transition-all hover:shadow-md"
+                  >
+                    <Calendar className="text-primary mr-3 h-5 w-5" />
                     <div>
-                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-0.5">Associated Event</p>
-                      <p className="text-sm font-bold group-hover:text-primary transition-colors">{event.title}</p>
+                      <p className="text-muted-foreground mb-0.5 text-xs font-semibold tracking-wider uppercase">
+                        Associated Event
+                      </p>
+                      <p className="group-hover:text-primary text-sm font-bold transition-colors">
+                        {event.title}
+                      </p>
                     </div>
                   </Link>
                 )}
-                
+
                 {program && (
-                  <Link href={`/programs/${program.slug}`} className="flex items-center bg-card border border-border/50 px-5 py-3 rounded-xl hover:shadow-md transition-all group">
-                    <BookOpen className="w-5 h-5 text-primary mr-3" />
+                  <Link
+                    href={`/programs/${program.slug}`}
+                    className="bg-card border-border/50 group flex items-center rounded-xl border px-5 py-3 transition-all hover:shadow-md"
+                  >
+                    <BookOpen className="text-primary mr-3 h-5 w-5" />
                     <div>
-                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-0.5">Associated Program</p>
-                      <p className="text-sm font-bold group-hover:text-primary transition-colors">{program.title}</p>
+                      <p className="text-muted-foreground mb-0.5 text-xs font-semibold tracking-wider uppercase">
+                        Associated Program
+                      </p>
+                      <p className="group-hover:text-primary text-sm font-bold transition-colors">
+                        {program.title}
+                      </p>
                     </div>
                   </Link>
                 )}
@@ -132,7 +152,7 @@ export default async function GalleryAlbumPage({ params }: GalleryAlbumPageProps
           {galleryImages.length > 0 ? (
             <LightboxGallery images={galleryImages} />
           ) : (
-            <div className="text-center py-24 bg-muted/50 rounded-3xl border border-dashed border-border">
+            <div className="bg-muted/50 border-border rounded-3xl border border-dashed py-24 text-center">
               <p className="text-muted-foreground font-semibold">No images found in this album.</p>
             </div>
           )}
@@ -140,7 +160,7 @@ export default async function GalleryAlbumPage({ params }: GalleryAlbumPageProps
       </section>
 
       {/* 3. CTA */}
-      <CTASection 
+      <CTASection
         title="Be Part of the Picture"
         description="Join our upcoming events and initiatives to become part of our community's visual story."
         buttonLabel="Explore Events"
