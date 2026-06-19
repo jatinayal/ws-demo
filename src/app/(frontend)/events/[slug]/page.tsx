@@ -20,6 +20,7 @@ interface EventPageProps {
   }>;
   searchParams: Promise<{
     success?: string;
+    error?: string;
   }>;
 }
 
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: EventPageProps) {
 
 export default async function EventDetailPage({ params, searchParams }: EventPageProps) {
   const { slug } = await params;
-  const { success } = await searchParams;
+  const { success, error } = await searchParams;
   const payload = await getPayloadClient();
   
   const events = await payload.find({
@@ -255,6 +256,16 @@ export default async function EventDetailPage({ params, searchParams }: EventPag
                         </div>
                       ) : (
                         <form action={submitEventRegistration} className="space-y-4 mt-6">
+                          {error && (
+                            <div className="bg-destructive/10 text-destructive p-4 rounded-xl border border-destructive/20 text-sm mb-4 font-medium flex items-start">
+                              <AlertCircle className="w-5 h-5 mr-2 shrink-0" />
+                              <span>
+                                {error === 'missing_fields' ? 'Please fill in all required fields.' : 
+                                 error === 'invalid_event' ? 'Invalid event selected.' : 
+                                 'An error occurred during registration. Please try again later.'}
+                              </span>
+                            </div>
+                          )}
                           <input type="hidden" name="eventId" value={event.id} />
                           <div>
                             <label htmlFor="name" className="block text-sm font-medium mb-1">Full Name</label>
