@@ -1,8 +1,8 @@
-import type { NextConfig } from "next";
-import { withPayload } from "@payloadcms/next/withPayload";
+import type { NextConfig } from 'next';
+import { withPayload } from '@payloadcms/next/withPayload';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  serverExternalPackages: ['sharp'],
 };
 
 export default withPayload(nextConfig);

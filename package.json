@@ -48,5 +48,9 @@
     "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "@img/sharp-linux-x64": "^0.35.2",
+    "@img/sharp-win32-x64": "^0.35.2"
   }
 }
