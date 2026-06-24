@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, MapPin, Video, ArrowRight, Clock, CalendarDays } from 'lucide-react';
 import { Event as PayloadEvent } from '@/payload-types';
+import { getMediaUrl } from '@/lib/utils';
 
 export const metadata = constructMetadata({
   title: 'Events & Workshops',
@@ -79,8 +80,7 @@ export default async function EventsPage({
           {events.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {(events as unknown as PayloadEvent[]).map((event, idx: number) => {
-                const coverImage =
-                  typeof event.coverImage === 'object' ? event.coverImage?.url : null;
+                const coverImage = getMediaUrl(event.coverImage) || null;
                 const eventDate = new Date(event.date);
                 const isUpcoming = event.eventStatus === 'upcoming' || eventDate > new Date();
 

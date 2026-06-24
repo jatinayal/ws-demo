@@ -25,6 +25,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { ImpactStatistic, SuccessStory } from '@/payload-types';
+import { getMediaUrl } from '@/lib/utils';
 
 const iconMap: Record<string, React.ElementType> = {
   Target,
@@ -55,14 +56,16 @@ export default async function ImpactPage() {
   const globalStats = statsRes.docs;
 
   const heroCover =
-    typeof impactData.hero?.coverImage === 'object' ? impactData.hero.coverImage?.url : null;
+    typeof impactData.hero?.coverImage === 'object'
+      ? getMediaUrl(impactData.hero.coverImage)
+      : null;
   const mapImage =
     typeof impactData.geographicReach?.mapImage === 'object'
-      ? impactData.geographicReach.mapImage?.url
+      ? getMediaUrl(impactData.geographicReach.mapImage)
       : null;
   const reportUrl =
     typeof impactData.annualReport?.reportFile === 'object'
-      ? impactData.annualReport.reportFile?.url
+      ? getMediaUrl(impactData.annualReport.reportFile)
       : null;
 
   return (
@@ -280,7 +283,7 @@ export default async function ImpactPage() {
                 {(impactData.featuredSuccessStories.stories as unknown as SuccessStory[]).map(
                   (story, idx: number) => {
                     if (typeof story !== 'object') return null;
-                    const coverImage = typeof story.image === 'object' ? story.image?.url : null;
+                    const coverImage = getMediaUrl(story.image) || null;
                     return (
                       <AnimatedSection
                         key={story.id}

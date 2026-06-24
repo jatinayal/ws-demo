@@ -14,7 +14,7 @@ export const Gallery: CollectionConfig = {
       return null;
     },
   },
-    access: {
+  access: {
     read: publicReadAccess,
     create: isContentManager,
     update: isContentManager,
@@ -34,7 +34,10 @@ export const Gallery: CollectionConfig = {
           ({ value, data }) => {
             if (value) return value;
             if (data?.title) {
-              return data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+              return data.title
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)+/g, '');
             }
             return value;
           },

@@ -8,7 +8,7 @@ export const Volunteers: CollectionConfig = {
     useAsTitle: 'fullName',
     defaultColumns: ['fullName', 'email', 'status', 'createdAt'],
   },
-    access: {
+  access: {
     read: isVolunteerManager,
     create: () => true, // Public can submit
     update: isVolunteerManager,
@@ -18,13 +18,17 @@ export const Volunteers: CollectionConfig = {
     { name: 'fullName', type: 'text', required: true },
     { name: 'email', type: 'email', required: true },
     { name: 'phone', type: 'text', required: true },
-    { name: 'areasOfInterest', type: 'select', hasMany: true, options: [
+    {
+      name: 'areasOfInterest',
+      type: 'select',
+      hasMany: true,
+      options: [
         { label: 'Events', value: 'events' },
         { label: 'Mentorship', value: 'mentorship' },
         { label: 'Fundraising', value: 'fundraising' },
         { label: 'Admin Support', value: 'admin_support' },
-        { label: 'Other', value: 'other' }
-      ]
+        { label: 'Other', value: 'other' },
+      ],
     },
     { name: 'message', type: 'textarea' },
     {
@@ -34,7 +38,7 @@ export const Volunteers: CollectionConfig = {
         { label: 'Pending', value: 'pending' },
         { label: 'Contacted', value: 'contacted' },
         { label: 'Active', value: 'active' },
-        { label: 'Inactive', value: 'inactive' }
+        { label: 'Inactive', value: 'inactive' },
       ],
       defaultValue: 'pending',
       admin: { position: 'sidebar' },

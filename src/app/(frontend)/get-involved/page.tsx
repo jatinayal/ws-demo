@@ -6,6 +6,7 @@ import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { GetInvolvedWorkspace } from './GetInvolvedWorkspace';
 import { GetInvolvedFAQ } from './GetInvolvedFAQ';
 import { constructMetadata } from '@/lib/seo';
+import { getMediaUrl } from '@/lib/utils';
 
 export async function generateMetadata() {
   const data = await getGetInvolved();
@@ -19,8 +20,9 @@ export async function generateMetadata() {
 export default async function GetInvolvedPage() {
   const data = await getGetInvolved();
   const heroImage =
-    (typeof data.hero?.backgroundImage === 'object' ? data.hero.backgroundImage?.url : undefined) ||
-    undefined;
+    (typeof data.hero?.backgroundImage === 'object'
+      ? getMediaUrl(data.hero.backgroundImage)
+      : undefined) || undefined;
 
   return (
     <div className="bg-background flex min-h-screen flex-col">

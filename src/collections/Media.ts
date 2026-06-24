@@ -3,7 +3,7 @@ import { isContentManager, isAdmin, publicReadAccess } from '../access';
 
 export const Media: CollectionConfig = {
   slug: 'media',
-    access: {
+  access: {
     read: publicReadAccess,
     create: isContentManager,
     update: isContentManager,

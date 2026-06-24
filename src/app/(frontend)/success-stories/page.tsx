@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Quote, Heart } from 'lucide-react';
 import { SuccessStory } from '@/payload-types';
+import { getMediaUrl } from '@/lib/utils';
 
 export const metadata = constructMetadata({
   title: 'Success Stories',
@@ -43,7 +44,7 @@ export default async function SuccessStoriesPage() {
           {stories.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {(stories as unknown as SuccessStory[]).map((story, idx: number) => {
-                const coverImage = typeof story.image === 'object' ? story.image?.url : null;
+                const coverImage = getMediaUrl(story.image) || null;
                 const programName = typeof story.program === 'object' ? story.program?.title : null;
 
                 return (

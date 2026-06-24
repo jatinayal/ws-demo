@@ -8,7 +8,7 @@ export const PartnershipRequests: CollectionConfig = {
     useAsTitle: 'organizationName',
     defaultColumns: ['organizationName', 'contactName', 'partnershipType', 'status', 'createdAt'],
   },
-    access: {
+  access: {
     read: isPartnershipManager,
     create: () => true, // Public can submit
     update: isPartnershipManager,
@@ -28,7 +28,7 @@ export const PartnershipRequests: CollectionConfig = {
         { label: 'Institutional / Academic', value: 'institutional' },
         { label: 'CSR Engagement', value: 'csr' },
         { label: 'Sponsorship', value: 'sponsorship' },
-        { label: 'Other', value: 'other' }
+        { label: 'Other', value: 'other' },
       ],
       required: true,
     },
@@ -41,7 +41,7 @@ export const PartnershipRequests: CollectionConfig = {
         { label: 'In Review', value: 'review' },
         { label: 'Contacted', value: 'contacted' },
         { label: 'Partnership Established', value: 'established' },
-        { label: 'Declined', value: 'declined' }
+        { label: 'Declined', value: 'declined' },
       ],
       defaultValue: 'new',
       admin: { position: 'sidebar' },

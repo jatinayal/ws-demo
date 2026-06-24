@@ -14,7 +14,7 @@ export const Events: CollectionConfig = {
       return null;
     },
   },
-    access: {
+  access: {
     read: publicReadAccess,
     create: isContentManager,
     update: isContentManager,
@@ -34,7 +34,10 @@ export const Events: CollectionConfig = {
           ({ value, data }) => {
             if (value) return value;
             if (data?.title) {
-              return data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+              return data.title
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)+/g, '');
             }
             return value;
           },
@@ -81,12 +84,21 @@ export const Events: CollectionConfig = {
     {
       type: 'row',
       fields: [
-        { name: 'date', type: 'date', required: true, admin: { date: { pickerAppearance: 'dayAndTime' } } },
+        {
+          name: 'date',
+          type: 'date',
+          required: true,
+          admin: { date: { pickerAppearance: 'dayAndTime' } },
+        },
         { name: 'endDate', type: 'date', admin: { date: { pickerAppearance: 'dayAndTime' } } },
       ],
     },
     { name: 'location', type: 'text', required: true },
-    { name: 'virtualLink', type: 'text', admin: { condition: (data) => data.eventType === 'virtual' || data.eventType === 'hybrid' } },
+    {
+      name: 'virtualLink',
+      type: 'text',
+      admin: { condition: (data) => data.eventType === 'virtual' || data.eventType === 'hybrid' },
+    },
     { name: 'coverImage', type: 'upload', relationTo: 'media', required: true },
     { name: 'shortDescription', type: 'textarea', required: true, maxLength: 300 },
     { name: 'description', type: 'richText', required: true },
@@ -94,7 +106,12 @@ export const Events: CollectionConfig = {
       name: 'schedule',
       type: 'array',
       fields: [
-        { name: 'time', type: 'text', required: true, admin: { placeholder: 'e.g., 09:00 AM - 10:30 AM' } },
+        {
+          name: 'time',
+          type: 'text',
+          required: true,
+          admin: { placeholder: 'e.g., 09:00 AM - 10:30 AM' },
+        },
         { name: 'title', type: 'text', required: true },
         { name: 'description', type: 'textarea' },
       ],
@@ -120,9 +137,7 @@ export const Events: CollectionConfig = {
     {
       name: 'gallery',
       type: 'array',
-      fields: [
-        { name: 'image', type: 'upload', relationTo: 'media', required: true },
-      ],
+      fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
     },
     {
       name: 'relatedPrograms',
@@ -138,7 +153,11 @@ export const Events: CollectionConfig = {
       fields: [
         { name: 'registrationOpen', type: 'checkbox', defaultValue: true },
         { name: 'capacity', type: 'number' },
-        { name: 'registrationLink', type: 'text', admin: { description: 'External link if not using native registration' } },
+        {
+          name: 'registrationLink',
+          type: 'text',
+          admin: { description: 'External link if not using native registration' },
+        },
       ],
     },
     {

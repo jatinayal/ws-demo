@@ -14,7 +14,7 @@ export const Programs: CollectionConfig = {
       return null;
     },
   },
-    access: {
+  access: {
     read: publicReadAccess,
     create: isContentManager,
     update: isContentManager,
@@ -42,7 +42,10 @@ export const Programs: CollectionConfig = {
           ({ value, data }) => {
             if (value) return value;
             if (data?.title) {
-              return data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+              return data.title
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)+/g, '');
             }
             return value;
           },
@@ -93,9 +96,7 @@ export const Programs: CollectionConfig = {
     {
       name: 'objectives',
       type: 'array',
-      fields: [
-        { name: 'objective', type: 'text', required: true },
-      ],
+      fields: [{ name: 'objective', type: 'text', required: true }],
     },
     {
       name: 'keyActivities',
@@ -112,7 +113,12 @@ export const Programs: CollectionConfig = {
         { name: 'label', type: 'text', required: true },
         { name: 'value', type: 'number', required: true },
         { name: 'suffix', type: 'text' },
-        { name: 'icon', type: 'select', options: ['Users', 'Target', 'Star', 'Heart', 'Globe', 'Zap', 'Shield'], defaultValue: 'Star' },
+        {
+          name: 'icon',
+          type: 'select',
+          options: ['Users', 'Target', 'Star', 'Heart', 'Globe', 'Zap', 'Shield'],
+          defaultValue: 'Star',
+        },
       ],
     },
     {
@@ -122,9 +128,7 @@ export const Programs: CollectionConfig = {
     {
       name: 'gallery',
       type: 'array',
-      fields: [
-        { name: 'image', type: 'upload', relationTo: 'media', required: true },
-      ],
+      fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
     },
     {
       name: 'relatedPrograms',
@@ -137,9 +141,10 @@ export const Programs: CollectionConfig = {
       name: 'donationUrl',
       type: 'text',
       admin: {
-        description: 'Contextual donation URL for this specific program. Overrides global donation link.',
-        position: 'sidebar'
-      }
+        description:
+          'Contextual donation URL for this specific program. Overrides global donation link.',
+        position: 'sidebar',
+      },
     },
     {
       name: 'meta',

@@ -25,15 +25,15 @@ export const StatisticsCard = ({
 }: StatisticsCardProps) => {
   return (
     <Card className={cn('overflow-hidden', className)} {...props}>
-      <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-        {Icon && <Icon className="w-4 h-4 text-primary" />}
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-muted-foreground text-sm font-medium">{title}</CardTitle>
+        {Icon && <Icon className="text-primary h-4 w-4" />}
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>
-        {description && <p className="text-xs text-muted-foreground mt-1">{description}</p>}
+        {description && <p className="text-muted-foreground mt-1 text-xs">{description}</p>}
         {trend && (
-          <div className="flex items-center mt-2 space-x-1">
+          <div className="mt-2 flex items-center space-x-1">
             <span
               className={cn('text-xs font-medium', {
                 'text-secondary': trend.value >= 0, // Deep Green for positive impact
@@ -43,7 +43,7 @@ export const StatisticsCard = ({
               {trend.value > 0 ? '+' : ''}
               {trend.value}%
             </span>
-            <span className="text-xs text-muted-foreground">{trend.label}</span>
+            <span className="text-muted-foreground text-xs">{trend.label}</span>
           </div>
         )}
       </CardContent>

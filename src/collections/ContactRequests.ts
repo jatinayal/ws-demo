@@ -7,7 +7,7 @@ export const ContactRequests: CollectionConfig = {
     group: 'Community Engagement',
     useAsTitle: 'name',
   },
-    access: {
+  access: {
     read: isVolunteerManager,
     create: () => true, // Public can submit
     update: isVolunteerManager,
@@ -42,7 +42,7 @@ export const ContactRequests: CollectionConfig = {
         { label: 'Under Review', value: 'under_review' },
         { label: 'Responded', value: 'responded' },
         { label: 'Resolved', value: 'resolved' },
-        { label: 'Spam/Archived', value: 'archived' }
+        { label: 'Spam/Archived', value: 'archived' },
       ],
       defaultValue: 'new',
       admin: { position: 'sidebar' },

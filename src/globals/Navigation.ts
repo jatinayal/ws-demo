@@ -2,11 +2,11 @@ import type { GlobalConfig } from 'payload';
 import { isContentManager, publicReadAccess } from '../access';
 
 export const Navigation: GlobalConfig = {
-  slug: 'navigation', 
+  slug: 'navigation',
   admin: {
     group: 'System Settings',
   },
-    access: {
+  access: {
     read: publicReadAccess,
     update: isContentManager,
   },

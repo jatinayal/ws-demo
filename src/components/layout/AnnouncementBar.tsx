@@ -10,14 +10,14 @@ export function AnnouncementBar({ enabled, text, link }: AnnouncementBarProps) {
   if (!enabled || !text) return null;
 
   const content = (
-    <div className="bg-primary text-primary-foreground py-2 px-4 text-center text-sm font-medium">
+    <div className="bg-primary text-primary-foreground px-4 py-2 text-center text-sm font-medium">
       {text}
     </div>
   );
 
   if (link) {
     return (
-      <Link href={link} className="block hover:opacity-90 transition-opacity">
+      <Link href={link} className="block transition-opacity hover:opacity-90">
         {content}
       </Link>
     );

@@ -15,6 +15,7 @@ import { Target, Heart, Users, Shield, Globe, Star, Zap, Quote } from 'lucide-re
 import { constructMetadata } from '@/lib/seo';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { Partner, SuccessStory, ImpactStatistic } from '@/payload-types';
+import { getMediaUrl } from '@/lib/utils';
 
 // Icons mapping for Core Values
 const iconMap: Record<string, React.ElementType> = {
@@ -60,7 +61,7 @@ export default async function AboutPage() {
         }
         backgroundImage={
           typeof aboutUs.hero?.backgroundImage === 'object'
-            ? aboutUs.hero.backgroundImage?.url || undefined
+            ? getMediaUrl(aboutUs.hero.backgroundImage) || undefined
             : undefined
         }
       />
@@ -73,11 +74,7 @@ export default async function AboutPage() {
             <ContentBlock
               heading={aboutUs.organizationOverview.heading}
               content={aboutUs.organizationOverview.content}
-              image={
-                typeof aboutUs.organizationOverview.image === 'object'
-                  ? aboutUs.organizationOverview.image?.url
-                  : undefined
-              }
+              image={getMediaUrl(aboutUs.organizationOverview.image) || undefined}
               imageAlignment="right"
             />
           </Container>
@@ -237,9 +234,9 @@ export default async function AboutPage() {
             <div className="bg-card border-border/40 relative mx-auto grid max-w-6xl grid-cols-1 items-stretch overflow-hidden rounded-3xl border shadow-xl md:rounded-[3rem] lg:grid-cols-5">
               <div className="relative min-h-[300px] md:min-h-[400px] lg:col-span-2">
                 {typeof aboutUs.founderMessage.image === 'object' &&
-                aboutUs.founderMessage.image?.url ? (
+                getMediaUrl(aboutUs.founderMessage.image) ? (
                   <Image
-                    src={aboutUs.founderMessage.image.url}
+                    src={getMediaUrl(aboutUs.founderMessage.image)}
                     alt={aboutUs.founderMessage.founderName}
                     fill
                     className="object-cover"
@@ -309,7 +306,7 @@ export default async function AboutPage() {
             name: partner.name,
             logo:
               typeof partner.logo === 'object'
-                ? partner.logo?.url || '/placeholder.png'
+                ? getMediaUrl(partner.logo) || '/placeholder.png'
                 : '/placeholder.png',
             websiteUrl: partner.websiteUrl || undefined,
           }))}
@@ -325,7 +322,7 @@ export default async function AboutPage() {
             quote: story.quote,
             image:
               typeof story.image === 'object'
-                ? story.image?.url || '/placeholder.png'
+                ? getMediaUrl(story.image) || '/placeholder.png'
                 : '/placeholder.png',
             program: typeof story.program === 'object' ? story.program?.title : undefined,
           }))}

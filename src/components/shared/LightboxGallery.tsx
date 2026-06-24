@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, ZoomIn, Camera } from 'lucide-react';
 import { AnimatedSection } from './AnimatedSection';
+import { getMediaUrl } from '@/lib/utils';
 
 interface GalleryImage {
   url: string;
@@ -89,7 +90,7 @@ export function LightboxGallery({ images }: LightboxGalleryProps) {
             >
               {/* Force next/image to render at original aspect ratio within standard masonry bounds */}
               <Image
-                src={img.url}
+                src={getMediaUrl(img)}
                 alt={img.alt}
                 width={800}
                 height={(800 / img.width) * img.height}
