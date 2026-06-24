@@ -14,7 +14,7 @@ export const SuccessStories: CollectionConfig = {
       return null;
     },
   },
-    access: {
+  access: {
     read: publicReadAccess,
     create: isContentManager,
     update: isContentManager,
@@ -34,7 +34,10 @@ export const SuccessStories: CollectionConfig = {
           ({ value, data }) => {
             if (value) return value;
             if (data?.personName) {
-              return data.personName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+              return data.personName
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)+/g, '');
             }
             return value;
           },
@@ -51,7 +54,12 @@ export const SuccessStories: CollectionConfig = {
       ],
       admin: { position: 'sidebar' },
     },
-    { name: 'program', type: 'relationship', relationTo: 'programs', admin: { position: 'sidebar' } },
+    {
+      name: 'program',
+      type: 'relationship',
+      relationTo: 'programs',
+      admin: { position: 'sidebar' },
+    },
     { name: 'image', type: 'upload', relationTo: 'media', required: true },
     { name: 'quote', type: 'textarea', required: true },
     { name: 'story', type: 'richText', required: true },
@@ -63,7 +71,7 @@ export const SuccessStories: CollectionConfig = {
         { name: 'location', type: 'text' },
         { name: 'occupation', type: 'text' },
       ],
-      admin: { position: 'sidebar' }
+      admin: { position: 'sidebar' },
     },
     {
       name: 'impactOutcomes',
@@ -77,9 +85,7 @@ export const SuccessStories: CollectionConfig = {
     {
       name: 'mediaGallery',
       type: 'array',
-      fields: [
-        { name: 'image', type: 'upload', relationTo: 'media', required: true },
-      ],
+      fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
     },
     {
       name: 'relatedStories',
@@ -93,8 +99,8 @@ export const SuccessStories: CollectionConfig = {
       type: 'text',
       admin: {
         description: 'Contextual donation URL for this specific story.',
-        position: 'sidebar'
-      }
+        position: 'sidebar',
+      },
     },
     {
       name: 'meta',

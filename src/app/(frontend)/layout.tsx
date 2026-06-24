@@ -11,39 +11,30 @@ export async function generateMetadata(): Promise<Metadata> {
   return await constructMetadata();
 }
 
-export default async function FrontendLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [settings, navigation] = await Promise.all([
-    getSiteSettings(),
-    getNavigation(),
-  ]);
+export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
+  const [settings, navigation] = await Promise.all([getSiteSettings(), getNavigation()]);
 
   return (
     <>
       <ErrorBoundary name="AnnouncementBar">
-        <AnnouncementBar 
+        <AnnouncementBar
           enabled={navigation.announcementBar?.enabled}
           text={navigation.announcementBar?.text}
           link={navigation.announcementBar?.link}
         />
       </ErrorBoundary>
       <ErrorBoundary name="Header">
-        <Header 
+        <Header
           organizationName={settings.organizationName}
           mainMenu={navigation.mainMenu}
           donationUrl={settings.donationUrl}
         />
       </ErrorBoundary>
-      <main className="flex-1 flex flex-col">
-        <ErrorBoundary name="PageChildren">
-          {children}
-        </ErrorBoundary>
+      <main className="flex flex-1 flex-col">
+        <ErrorBoundary name="PageChildren">{children}</ErrorBoundary>
       </main>
       <ErrorBoundary name="Footer">
-        <Footer 
+        <Footer
           organizationName={settings.organizationName}
           contactEmail={settings.contactEmail}
           contactPhone={settings.contactPhone}

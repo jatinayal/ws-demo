@@ -7,7 +7,7 @@ export const NewsletterSubscribers: CollectionConfig = {
     group: 'Community Engagement',
     useAsTitle: 'email',
   },
-    access: {
+  access: {
     read: isVolunteerManager,
     create: () => true, // Public can submit
     update: isVolunteerManager,
@@ -20,7 +20,7 @@ export const NewsletterSubscribers: CollectionConfig = {
       type: 'select',
       options: [
         { label: 'Subscribed', value: 'subscribed' },
-        { label: 'Unsubscribed', value: 'unsubscribed' }
+        { label: 'Unsubscribed', value: 'unsubscribed' },
       ],
       defaultValue: 'subscribed',
     },

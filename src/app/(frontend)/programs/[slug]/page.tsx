@@ -25,6 +25,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import type { SerializedEditorState } from 'lexical';
+import { getMediaUrl } from '@/lib/utils';
 
 const iconMap: Record<string, React.ElementType> = {
   Target,
@@ -65,7 +66,7 @@ export async function generateMetadata({ params }: ProgramPageProps) {
   return constructMetadata({
     title: program.meta?.title || program.title,
     description: program.meta?.description || program.shortDescription,
-    image: typeof program.meta?.image === 'object' ? program.meta.image?.url : undefined,
+    image: typeof program.meta?.image === 'object' ? getMediaUrl(program.meta.image) : undefined,
     path: `/programs/${slug}`,
   });
 }
@@ -85,7 +86,7 @@ export default async function ProgramDetailPage({ params }: ProgramPageProps) {
   }
 
   const program = programs.docs[0] as unknown as Program;
-  const coverImage = typeof program.coverImage === 'object' ? program.coverImage?.url : null;
+  const coverImage = getMediaUrl(program.coverImage) || null;
   const catLabel = categoryLabels[program.category as string] || program.category;
 
   return (
@@ -299,12 +300,17 @@ export default async function ProgramDetailPage({ params }: ProgramPageProps) {
                   },
                   idx: number,
                 ) => {
-                  if (typeof item.image !== 'object' || !item.image?.url) return null;
+                  if (
+                    typeof item.image !== 'object' ||
+                    item.image === null ||
+                    !getMediaUrl(item.image)
+                  )
+                    return null;
                   return (
                     <AnimatedSection key={idx} direction="up" delay={idx * 0.1}>
                       <div className="group relative aspect-square overflow-hidden rounded-2xl shadow-sm">
                         <Image
-                          src={item.image.url}
+                          src={getMediaUrl(item.image)}
                           alt={item.image.alt || 'Gallery Image'}
                           fill
                           className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -333,10 +339,7 @@ export default async function ProgramDetailPage({ params }: ProgramPageProps) {
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 md:gap-8">
               {program.relatedPrograms.map((relatedProgram: Program | string, idx: number) => {
                 if (typeof relatedProgram !== 'object') return null;
-                const rCoverImage =
-                  typeof relatedProgram.coverImage === 'object'
-                    ? relatedProgram.coverImage?.url
-                    : null;
+                const rCoverImage = getMediaUrl(relatedProgram.coverImage) || null;
                 return (
                   <AnimatedSection key={relatedProgram.id} direction="up" delay={idx * 0.1}>
                     <Link href={`/programs/${relatedProgram.slug}`} className="group block h-full">

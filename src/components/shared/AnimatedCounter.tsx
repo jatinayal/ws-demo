@@ -20,7 +20,7 @@ export function AnimatedCounter({ value, duration = 2000 }: AnimatedCounterProps
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (countRef.current) {
@@ -40,10 +40,10 @@ export function AnimatedCounter({ value, duration = 2000 }: AnimatedCounterProps
       if (!startTime) startTime = timestamp;
       const progress = timestamp - startTime;
       const percentage = Math.min(progress / duration, 1);
-      
+
       // Easing function (easeOutQuart)
       const easePercentage = 1 - Math.pow(1 - percentage, 4);
-      
+
       setCount(Math.floor(easePercentage * value));
 
       if (percentage < 1) {

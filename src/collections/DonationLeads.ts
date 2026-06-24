@@ -7,7 +7,7 @@ export const DonationLeads: CollectionConfig = {
     group: 'Community Engagement',
     useAsTitle: 'fullName',
   },
-    access: {
+  access: {
     read: isPartnershipManager,
     create: () => true, // Public can submit
     update: isPartnershipManager,
@@ -17,11 +17,16 @@ export const DonationLeads: CollectionConfig = {
     { name: 'fullName', type: 'text', required: true },
     { name: 'email', type: 'email', required: true },
     { name: 'amount', type: 'number', required: true },
-    { name: 'frequency', type: 'select', options: [
+    {
+      name: 'frequency',
+      type: 'select',
+      options: [
         { label: 'One-time', value: 'one_time' },
         { label: 'Monthly', value: 'monthly' },
-        { label: 'Yearly', value: 'yearly' }
-      ], required: true },
+        { label: 'Yearly', value: 'yearly' },
+      ],
+      required: true,
+    },
     { name: 'message', type: 'textarea' },
     {
       name: 'status',
@@ -29,7 +34,7 @@ export const DonationLeads: CollectionConfig = {
       options: [
         { label: 'New', value: 'new' },
         { label: 'Contacted', value: 'contacted' },
-        { label: 'Closed', value: 'closed' }
+        { label: 'Closed', value: 'closed' },
       ],
       defaultValue: 'new',
       admin: { position: 'sidebar' },

@@ -7,7 +7,7 @@ export const ImpactPage: GlobalConfig = {
     group: 'Website Content',
     preview: () => `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/impact`,
   },
-    access: {
+  access: {
     read: publicReadAccess,
     update: isContentManager,
   },
@@ -17,7 +17,12 @@ export const ImpactPage: GlobalConfig = {
       type: 'group',
       fields: [
         { name: 'heading', type: 'text', required: true, defaultValue: 'Our Global Impact' },
-        { name: 'subheading', type: 'textarea', required: true, defaultValue: 'Measurable outcomes of our mission to empower women.' },
+        {
+          name: 'subheading',
+          type: 'textarea',
+          required: true,
+          defaultValue: 'Measurable outcomes of our mission to empower women.',
+        },
         { name: 'coverImage', type: 'upload', relationTo: 'media' },
       ],
     },
@@ -61,7 +66,12 @@ export const ImpactPage: GlobalConfig = {
             { name: 'label', type: 'text', required: true },
             { name: 'value', type: 'number', required: true },
             { name: 'suffix', type: 'text' },
-            { name: 'icon', type: 'select', options: ['Users', 'Target', 'Star', 'Heart', 'Globe', 'Zap', 'Shield', 'TrendingUp'], defaultValue: 'TrendingUp' },
+            {
+              name: 'icon',
+              type: 'select',
+              options: ['Users', 'Target', 'Star', 'Heart', 'Globe', 'Zap', 'Shield', 'TrendingUp'],
+              defaultValue: 'TrendingUp',
+            },
           ],
         },
       ],

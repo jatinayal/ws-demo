@@ -8,7 +8,7 @@ export const EventRegistrations: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'email', 'event', 'status', 'createdAt'],
   },
-    access: {
+  access: {
     read: isVolunteerManager,
     create: () => true, // Public can submit
     update: isVolunteerManager,

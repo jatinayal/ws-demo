@@ -12,6 +12,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { SuccessStory } from '@/payload-types';
+import { getMediaUrl } from '@/lib/utils';
 
 interface StoryPageProps {
   params: Promise<{
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: StoryPageProps) {
   return constructMetadata({
     title: `${story.personName}'s Story`,
     description: story.quote || `Read the inspiring success story of ${story.personName}.`,
-    image: typeof story.image === 'object' ? story.image?.url : undefined,
+    image: getMediaUrl(story.image) || undefined,
     path: `/success-stories/${slug}`,
   });
 }
@@ -54,7 +55,7 @@ export default async function StoryDetailPage({ params }: StoryPageProps) {
   }
 
   const story = stories.docs[0];
-  const coverImage = typeof story.image === 'object' ? story.image?.url : null;
+  const coverImage = getMediaUrl(story.image) || null;
   const programName = typeof story.program === 'object' ? story.program?.title : null;
   const programSlug = typeof story.program === 'object' ? story.program?.slug : null;
 
@@ -240,12 +241,17 @@ export default async function StoryDetailPage({ params }: StoryPageProps) {
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               {story.mediaGallery.map(
                 (item: { image?: { url?: string; alt?: string } | null | string }, idx: number) => {
-                  if (typeof item.image !== 'object' || !item.image?.url) return null;
+                  if (
+                    typeof item.image !== 'object' ||
+                    item.image === null ||
+                    !getMediaUrl(item.image)
+                  )
+                    return null;
                   return (
                     <AnimatedSection key={idx} direction="up" delay={idx * 0.1}>
                       <div className="group relative aspect-square overflow-hidden rounded-2xl shadow-sm">
                         <Image
-                          src={item.image.url}
+                          src={getMediaUrl(item.image)}
                           alt={item.image.alt || 'Gallery Image'}
                           fill
                           className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -271,8 +277,7 @@ export default async function StoryDetailPage({ params }: StoryPageProps) {
             <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
               {story.relatedStories.map((relatedStory: SuccessStory | string, idx: number) => {
                 if (typeof relatedStory !== 'object') return null;
-                const rCoverImage =
-                  typeof relatedStory.image === 'object' ? relatedStory.image?.url : null;
+                const rCoverImage = getMediaUrl(relatedStory.image) || null;
                 return (
                   <AnimatedSection key={relatedStory.id} direction="up" delay={idx * 0.1}>
                     <Link

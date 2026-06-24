@@ -2,12 +2,12 @@ import type { GlobalConfig } from 'payload';
 import { isContentManager, publicReadAccess } from '../access';
 
 export const Homepage: GlobalConfig = {
-  slug: 'homepage', 
+  slug: 'homepage',
   admin: {
     group: 'Website Content',
     preview: () => `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/`,
   },
-    access: {
+  access: {
     read: publicReadAccess,
     update: isContentManager,
   },
@@ -48,7 +48,13 @@ export const Homepage: GlobalConfig = {
       fields: [
         { name: 'heading', type: 'text', defaultValue: 'Our Featured Programs' },
         { name: 'description', type: 'textarea' },
-        { name: 'featuredPrograms', type: 'relationship', relationTo: 'programs', hasMany: true, maxDepth: 1 },
+        {
+          name: 'featuredPrograms',
+          type: 'relationship',
+          relationTo: 'programs',
+          hasMany: true,
+          maxDepth: 1,
+        },
       ],
     },
     {
@@ -65,7 +71,13 @@ export const Homepage: GlobalConfig = {
       fields: [
         { name: 'heading', type: 'text', defaultValue: 'Success Stories' },
         { name: 'description', type: 'textarea' },
-        { name: 'featuredStories', type: 'relationship', relationTo: 'success-stories', hasMany: true, maxDepth: 1 },
+        {
+          name: 'featuredStories',
+          type: 'relationship',
+          relationTo: 'success-stories',
+          hasMany: true,
+          maxDepth: 1,
+        },
       ],
     },
     {

@@ -5,9 +5,9 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   // Payload CMS handles /admin routes natively.
   // This middleware is for protecting custom frontend routes (e.g. /volunteer-portal)
-  
+
   const isProtectedPath = request.nextUrl.pathname.startsWith('/volunteer-portal');
-  
+
   if (isProtectedPath) {
     // Check for Payload's payload-token cookie
     const token = request.cookies.get('payload-token')?.value;

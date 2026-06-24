@@ -16,10 +16,10 @@ export function CardSkeleton() {
 export function PageSkeleton() {
   return (
     <div className="w-full">
-      <Skeleton className="h-[30vh] w-full mb-12" />
-      <div className="container mx-auto px-4 space-y-8">
+      <Skeleton className="mb-12 h-[30vh] w-full" />
+      <div className="container mx-auto space-y-8 px-4">
         <Skeleton className="h-10 w-[300px]" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <CardSkeleton />
           <CardSkeleton />
           <CardSkeleton />

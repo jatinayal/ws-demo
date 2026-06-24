@@ -4,42 +4,42 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Loading() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="bg-primary text-primary-foreground py-32 md:py-48 relative overflow-hidden">
-        <Container className="text-center relative z-10">
-          <Skeleton className="h-16 w-3/4 max-w-3xl mx-auto mb-6 rounded-xl bg-white/20" />
-          <Skeleton className="h-8 w-1/2 max-w-2xl mx-auto rounded-lg bg-white/10" />
+    <div className="flex min-h-screen flex-col">
+      <div className="bg-primary text-primary-foreground relative overflow-hidden py-32 md:py-48">
+        <Container className="relative z-10 text-center">
+          <Skeleton className="mx-auto mb-6 h-16 w-3/4 max-w-3xl rounded-xl bg-white/20" />
+          <Skeleton className="mx-auto h-8 w-1/2 max-w-2xl rounded-lg bg-white/10" />
         </Container>
       </div>
 
-      <section className="py-12 md:py-16 bg-card border-b relative -mt-10 z-30 rounded-t-[3rem] shadow-sm">
+      <section className="bg-card relative z-30 -mt-10 rounded-t-[3rem] border-b py-12 shadow-sm md:py-16">
         <Container>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="text-center">
-                <Skeleton className="w-12 h-12 mx-auto rounded-xl mb-4" />
-                <Skeleton className="h-10 w-24 mx-auto mb-2 rounded-lg" />
-                <Skeleton className="h-4 w-32 mx-auto rounded-md" />
+                <Skeleton className="mx-auto mb-4 h-12 w-12 rounded-xl" />
+                <Skeleton className="mx-auto mb-2 h-10 w-24 rounded-lg" />
+                <Skeleton className="mx-auto h-4 w-32 rounded-md" />
               </div>
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="py-24 md:py-36 bg-muted/30">
+      <section className="bg-muted/30 py-24 md:py-36">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <div>
-              <Skeleton className="h-12 w-3/4 mb-6 rounded-xl" />
-              <Skeleton className="h-6 w-full mb-4 rounded-md" />
-              <Skeleton className="h-6 w-5/6 mb-10 rounded-md" />
+              <Skeleton className="mb-6 h-12 w-3/4 rounded-xl" />
+              <Skeleton className="mb-4 h-6 w-full rounded-md" />
+              <Skeleton className="mb-10 h-6 w-5/6 rounded-md" />
               <div className="space-y-6">
                 {[1, 2, 3].map((i) => (
                   <Skeleton key={i} className="h-24 w-full rounded-2xl" />
                 ))}
               </div>
             </div>
-            <Skeleton className="aspect-square lg:aspect-[4/3] w-full rounded-3xl" />
+            <Skeleton className="aspect-square w-full rounded-3xl lg:aspect-[4/3]" />
           </div>
         </Container>
       </section>

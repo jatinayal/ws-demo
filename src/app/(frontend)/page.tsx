@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { Program, SuccessStory, Event, Partner, ImpactStatistic } from '@/payload-types';
+import { getMediaUrl } from '@/lib/utils';
 
 // Icons mapping for Impact Statistics
 const iconMap: Record<string, React.ElementType> = {
@@ -112,7 +113,7 @@ export default async function Home() {
         }
         backgroundImage={
           typeof homepage.hero?.backgroundImage === 'object'
-            ? homepage.hero.backgroundImage?.url || undefined
+            ? getMediaUrl(homepage.hero.backgroundImage) || undefined
             : undefined
         }
         primaryCta={
@@ -180,9 +181,9 @@ export default async function Home() {
               <AnimatedSection direction="left" delay={0.2} className="order-1 w-full md:order-2">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl md:rounded-3xl">
                   {typeof homepage.aboutSection.image === 'object' &&
-                  homepage.aboutSection.image?.url ? (
+                  getMediaUrl(homepage.aboutSection.image) ? (
                     <Image
-                      src={homepage.aboutSection.image.url}
+                      src={getMediaUrl(homepage.aboutSection.image)}
                       alt="About Us"
                       fill
                       className="object-contain transition-transform duration-700"
@@ -317,8 +318,7 @@ export default async function Home() {
           {programs.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               {(programs as unknown as Program[]).map((program, idx: number) => {
-                const coverImage =
-                  typeof program.coverImage === 'object' ? program.coverImage?.url : null;
+                const coverImage = getMediaUrl(program.coverImage) || null;
                 const cat = program.category || 'community';
                 const catColor = categoryColors[cat] || categoryColors.community;
                 const catLabel = categoryLabels[cat] || cat;
@@ -402,7 +402,7 @@ export default async function Home() {
             quote: story.quote,
             image:
               typeof story.image === 'object'
-                ? story.image?.url || '/placeholder.png'
+                ? getMediaUrl(story.image) || '/placeholder.png'
                 : '/placeholder.png',
             program: typeof story.program === 'object' ? story.program?.title : undefined,
           }))}
@@ -503,7 +503,7 @@ export default async function Home() {
             name: partner.name,
             logo:
               typeof partner.logo === 'object'
-                ? partner.logo?.url || '/placeholder.png'
+                ? getMediaUrl(partner.logo) || '/placeholder.png'
                 : '/placeholder.png',
             websiteUrl: partner.websiteUrl || '#',
           }))}

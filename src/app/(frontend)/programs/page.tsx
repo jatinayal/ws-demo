@@ -12,6 +12,7 @@ import { ArrowRight, BookOpen, Activity } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Program } from '@/payload-types';
+import { getMediaUrl } from '@/lib/utils';
 
 export const metadata = constructMetadata({
   title: 'Our Programs',
@@ -64,8 +65,7 @@ export default async function ProgramsPage() {
           {programs.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {(programs as unknown as Program[]).map((program, idx: number) => {
-                const coverImage =
-                  typeof program.coverImage === 'object' ? program.coverImage?.url : null;
+                const coverImage = getMediaUrl(program.coverImage) || null;
                 const cat = program.category || 'community';
                 const catColor = categoryColors[cat] || categoryColors.community;
                 const catLabel = categoryLabels[cat] || cat;

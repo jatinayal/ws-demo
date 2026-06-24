@@ -9,6 +9,7 @@ import { constructMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, BookOpen } from 'lucide-react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import { getMediaUrl } from '@/lib/utils';
 
 interface GalleryAlbumPageProps {
   params: Promise<{
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: GalleryAlbumPageProps) {
   return constructMetadata({
     title: `${album.title} | Gallery`,
     description: album.meta?.description || `Explore photos from ${album.title}.`,
-    image: typeof album.coverImage === 'object' ? album.coverImage?.url : undefined,
+    image: getMediaUrl(album.coverImage) || undefined,
     path: `/gallery/${slug}`,
   });
 }
@@ -61,9 +62,10 @@ export default async function GalleryAlbumPage({ params }: GalleryAlbumPageProps
         image?: { url?: string; alt?: string; width?: number; height?: number } | string | null;
         caption?: string | null;
       }) => {
-        if (typeof item.image !== 'object' || !item.image?.url) return null;
+        if (typeof item.image !== 'object' || item.image === null || !getMediaUrl(item.image))
+          return null;
         return {
-          url: item.image.url,
+          url: getMediaUrl(item.image),
           alt: item.image.alt || item.caption || album.title,
           caption: item.caption,
           width: item.image.width || 800,

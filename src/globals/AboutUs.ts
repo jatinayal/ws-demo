@@ -2,13 +2,13 @@ import { GlobalConfig } from 'payload';
 import { isContentManager, publicReadAccess } from '../access';
 
 export const AboutUs: GlobalConfig = {
-  slug: 'about-us', 
+  slug: 'about-us',
   admin: {
     group: 'Website Content',
     preview: () => `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/about`,
   },
   label: 'About Us Page',
-    access: {
+  access: {
     read: publicReadAccess,
     update: isContentManager,
   },
@@ -45,7 +45,12 @@ export const AboutUs: GlobalConfig = {
       fields: [
         { name: 'title', type: 'text', required: true },
         { name: 'description', type: 'textarea', required: true },
-        { name: 'icon', type: 'select', options: ['Heart', 'Users', 'Target', 'Star', 'Shield', 'Zap', 'Globe'], defaultValue: 'Star' },
+        {
+          name: 'icon',
+          type: 'select',
+          options: ['Heart', 'Users', 'Target', 'Star', 'Shield', 'Zap', 'Globe'],
+          defaultValue: 'Star',
+        },
       ],
     },
     {

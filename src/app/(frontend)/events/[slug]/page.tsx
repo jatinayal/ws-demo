@@ -23,6 +23,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 
 // Using a server action to handle registrations
 import { submitEventRegistration } from './actions';
+import { getMediaUrl } from '@/lib/utils';
 
 interface EventPageProps {
   params: Promise<{
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: EventPageProps) {
   return constructMetadata({
     title: event.title,
     description: event.shortDescription || `Join us for ${event.title}.`,
-    image: typeof event.coverImage === 'object' ? event.coverImage?.url : undefined,
+    image: getMediaUrl(event.coverImage) || undefined,
     path: `/events/${slug}`,
   });
 }
@@ -70,7 +71,7 @@ export default async function EventDetailPage({ params, searchParams }: EventPag
   }
 
   const event = events.docs[0];
-  const coverImage = typeof event.coverImage === 'object' ? event.coverImage?.url : null;
+  const coverImage = getMediaUrl(event.coverImage) || null;
   const eventDate = new Date(event.date);
   const endDate = event.endDate ? new Date(event.endDate) : null;
   const isUpcoming = event.eventStatus === 'upcoming' || eventDate > new Date();
@@ -231,8 +232,7 @@ export default async function EventDetailPage({ params, searchParams }: EventPag
                         },
                         idx: number,
                       ) => {
-                        const speakerImg =
-                          typeof speaker.image === 'object' ? speaker.image?.url : null;
+                        const speakerImg = getMediaUrl(speaker.image) || null;
                         return (
                           <div
                             key={idx}
@@ -472,12 +472,12 @@ export default async function EventDetailPage({ params, searchParams }: EventPag
                   },
                   idx: number,
                 ) => {
-                  if (typeof item.image !== 'object' || !item.image?.url) return null;
+                  if (typeof item.image !== 'object' || !getMediaUrl(item.image)) return null;
                   return (
                     <AnimatedSection key={idx} direction="up" delay={idx * 0.1}>
                       <div className="group relative aspect-square overflow-hidden rounded-2xl shadow-sm">
                         <Image
-                          src={item.image.url}
+                          src={getMediaUrl(item.image)}
                           alt="Event Gallery"
                           fill
                           className="object-cover transition-transform duration-700 group-hover:scale-110"

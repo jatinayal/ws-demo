@@ -7,7 +7,7 @@ export const Partners: CollectionConfig = {
     group: 'Operations',
     useAsTitle: 'name',
   },
-    access: {
+  access: {
     read: isPartnershipManager,
     create: isPartnershipManager,
     update: isPartnershipManager,
@@ -24,7 +24,7 @@ export const Partners: CollectionConfig = {
         { label: 'Corporate', value: 'corporate' },
         { label: 'NGO', value: 'ngo' },
         { label: 'Government', value: 'government' },
-        { label: 'Other', value: 'other' }
+        { label: 'Other', value: 'other' },
       ],
       required: true,
     },

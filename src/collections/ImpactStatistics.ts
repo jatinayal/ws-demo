@@ -7,7 +7,7 @@ export const ImpactStatistics: CollectionConfig = {
     group: 'Operations',
     useAsTitle: 'label',
   },
-    access: {
+  access: {
     read: publicReadAccess,
     create: isContentManager,
     update: isContentManager,

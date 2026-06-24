@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { ImageIcon, Camera, ArrowRight, Grid3X3 } from 'lucide-react';
 
 import { Gallery } from '@/payload-types';
+import { getMediaUrl } from '@/lib/utils';
 
 export const metadata = constructMetadata({
   title: 'Gallery & Media',
@@ -81,8 +82,7 @@ export default async function GalleryPage({
           {albums.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {(albums as unknown as Gallery[]).map((album, idx: number) => {
-                const coverImage =
-                  typeof album.coverImage === 'object' ? album.coverImage?.url : null;
+                const coverImage = getMediaUrl(album.coverImage) || null;
                 const imageCount = album.images?.length || 0;
 
                 return (
