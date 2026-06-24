@@ -25,10 +25,15 @@ import { AboutUs } from './globals/AboutUs';
 import { ImpactPage } from './globals/ImpactPage';
 import { GetInvolved } from './globals/GetInvolved';
 import { ContactPage } from './globals/ContactPage';
+import { PrivacyPolicy } from './globals/PrivacyPolicy';
+import { TermsOfService } from './globals/TermsOfService';
 
 export default buildConfig({
   admin: {
     user: Users.slug,
+    components: {
+      providers: ['@/components/admin/NotificationProvider#NotificationProvider'],
+    },
 
     meta: {
       titleSuffix: "- Women's Synergy",
@@ -58,7 +63,17 @@ export default buildConfig({
     ImpactStatistics,
     NewsletterSubscribers,
   ],
-  globals: [SiteSettings, Homepage, Navigation, AboutUs, ImpactPage, GetInvolved, ContactPage],
+  globals: [
+    SiteSettings,
+    Homepage,
+    Navigation,
+    AboutUs,
+    ImpactPage,
+    GetInvolved,
+    ContactPage,
+    PrivacyPolicy,
+    TermsOfService,
+  ],
   secret: process.env.PAYLOAD_SECRET || '',
   db: postgresAdapter({
     pool: {

@@ -34,30 +34,30 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="bg-secondary text-secondary-foreground relative overflow-hidden py-24 md:py-36">
+    <section className="bg-secondary text-secondary-foreground relative overflow-hidden px-4 py-16 md:px-0 md:py-36">
       <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay" />
       <div className="bg-accent/20 pointer-events-none absolute top-1/2 left-1/2 h-[1000px] w-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[150px]" />
 
       <Container className="relative z-10 max-w-2xl text-center">
         <AnimatedSection direction="up">
-          <h2 className="mb-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+          <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-white md:mb-6 md:text-5xl">
             Stay Informed
           </h2>
-          <p className="mb-12 text-xl leading-relaxed font-medium text-white/90 opacity-90">
+          <p className="mb-8 text-lg leading-relaxed font-medium text-white/90 opacity-90 md:mb-12 md:text-xl">
             Join our newsletter to receive the latest updates on our global initiatives, upcoming
             events, and inspiring stories.
           </p>
 
           <form
             onSubmit={handleSubmit}
-            className="mx-auto flex max-w-lg flex-col gap-4 sm:flex-row"
+            className="mx-auto flex max-w-lg flex-col gap-3 sm:flex-row md:gap-4"
           >
             <input
               type="email"
               placeholder="Enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="text-foreground focus:border-accent focus:ring-accent/20 flex-1 rounded-full border-2 border-transparent bg-white px-6 py-4 text-lg shadow-inner transition-all focus:ring-4 focus:outline-none"
+              className="text-foreground focus:border-accent focus:ring-accent/20 flex-1 rounded-full border-2 border-transparent bg-white px-5 py-3 text-base shadow-inner transition-all focus:ring-4 focus:outline-none md:px-6 md:py-4 md:text-lg"
               required
               disabled={status === 'loading' || status === 'success'}
             />
@@ -65,7 +65,7 @@ export function NewsletterSection() {
               type="submit"
               size="lg"
               variant="secondary"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 h-16 shrink-0 rounded-full px-10 text-lg shadow-lg transition-all duration-300 hover:scale-105"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 h-14 shrink-0 rounded-full px-8 text-base shadow-lg transition-all duration-300 hover:scale-105 md:h-16 md:px-10 md:text-lg"
               disabled={status === 'loading' || status === 'success'}
             >
               {status === 'loading'

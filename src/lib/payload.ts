@@ -93,10 +93,13 @@ export const getImpactPage = cache(async () => {
   }
 });
 
-export const getGetInvolved = cache(async () => {
+export const getGetInvolved = cache(async (): Promise<import('@/payload-types').GetInvolved> => {
   const payload = await getPayloadClient();
   try {
-    return await payload.findGlobal({ slug: 'get-involved', depth: 1 });
+    return (await payload.findGlobal({
+      slug: 'get-involved',
+      depth: 1,
+    })) as unknown as import('@/payload-types').GetInvolved;
   } catch {
     console.warn('Fallback: get_involved table not ready yet.');
     return {} as never;
@@ -112,3 +115,33 @@ export const getContactPage = cache(async () => {
     return {} as never;
   }
 });
+
+export const getPrivacyPolicy = cache(
+  async (): Promise<import('@/payload-types').PrivacyPolicy> => {
+    const payload = await getPayloadClient();
+    try {
+      return (await payload.findGlobal({
+        slug: 'privacy-policy',
+        depth: 1,
+      })) as unknown as import('@/payload-types').PrivacyPolicy;
+    } catch {
+      console.warn('Fallback: privacy_policy table not ready yet.');
+      return {} as never;
+    }
+  },
+);
+
+export const getTermsOfService = cache(
+  async (): Promise<import('@/payload-types').TermsOfService> => {
+    const payload = await getPayloadClient();
+    try {
+      return (await payload.findGlobal({
+        slug: 'terms-of-service',
+        depth: 1,
+      })) as unknown as import('@/payload-types').TermsOfService;
+    } catch {
+      console.warn('Fallback: terms_of_service table not ready yet.');
+      return {} as never;
+    }
+  },
+);

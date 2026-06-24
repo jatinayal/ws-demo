@@ -6,6 +6,7 @@ import { AnimatedSection } from '@/components/shared/AnimatedSection';
 import { ContactForm } from './ContactForm';
 import { constructMetadata } from '@/lib/seo';
 import { MapPin, Mail, Phone, Clock, HelpCircle, Share2 } from 'lucide-react';
+import { formatPhoneNumber } from '@/lib/utils';
 
 export async function generateMetadata() {
   const data = await getContactPage();
@@ -83,10 +84,10 @@ export default async function ContactUsPage() {
                       <div>
                         <h4 className="text-foreground font-bold">Phone Number</h4>
                         <a
-                          href={`tel:${settings.contactPhone}`}
+                          href={`tel:${settings.contactPhone.replace(/\D/g, '')}`}
                           className="text-primary mt-1 block hover:underline"
                         >
-                          {settings.contactPhone}
+                          {formatPhoneNumber(settings.contactPhone)}
                         </a>
                       </div>
                     </div>

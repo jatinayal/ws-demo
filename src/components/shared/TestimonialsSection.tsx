@@ -17,18 +17,22 @@ interface TestimonialsSectionProps {
   testimonials: Testimonial[];
 }
 
-export function TestimonialsSection({ title, description, testimonials }: TestimonialsSectionProps) {
+export function TestimonialsSection({
+  title,
+  description,
+  testimonials,
+}: TestimonialsSectionProps) {
   if (!testimonials || testimonials.length === 0) return null;
 
   return (
-    <section className="py-24 md:py-36 bg-gradient-to-b from-muted/50 to-background border-y">
+    <section className="from-muted/50 to-background border-y bg-gradient-to-b py-16 md:py-36">
       <Container>
-        <AnimatedSection direction="up">
+        <AnimatedSection direction="up" className="mb-8 md:mb-12">
           <SectionHeader title={title} description={description} align="center" />
         </AnimatedSection>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           {testimonials.map((testimonial, idx) => (
-            <QuoteCard 
+            <QuoteCard
               key={idx}
               quote={testimonial.quote}
               authorName={testimonial.personName}

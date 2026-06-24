@@ -2,7 +2,6 @@ import { getHomepage, getPayloadClient } from '@/lib/payload';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { HeroSection } from '@/components/shared/HeroSection';
 import { Container } from '@/components/shared/Container';
-import { SectionHeader } from '@/components/shared/section-header';
 import { CTASection } from '@/components/shared/CTASection';
 import { PartnersSection } from '@/components/shared/PartnersSection';
 import { TestimonialsSection } from '@/components/shared/TestimonialsSection';
@@ -105,6 +104,7 @@ export default async function Home() {
     <div className="flex min-h-screen flex-col">
       {/* 1. Hero Section */}
       <HeroSection
+        size="default"
         title={homepage.hero?.heading || 'Where Every Woman Leads'}
         subtitle={
           homepage.hero?.subheading ||
@@ -135,17 +135,24 @@ export default async function Home() {
 
       {/* 2. About Preview */}
       {homepage.aboutSection && (
-        <section className="bg-background relative overflow-hidden py-24 md:py-36">
+        <section className="bg-background relative overflow-hidden py-16 md:py-36">
           <div className="bg-primary/5 absolute top-0 right-0 -mt-40 -mr-40 h-96 w-96 rounded-full blur-3xl" />
           <div className="bg-accent/5 absolute bottom-0 left-0 -mb-40 -ml-40 h-96 w-96 rounded-full blur-3xl" />
 
           <Container className="relative z-10">
-            <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-              <AnimatedSection direction="right">
-                <h2 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
+            {/* Mobile Only Heading */}
+            <div className="mb-6 text-center md:hidden">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                {homepage.aboutSection.heading}
+              </h2>
+            </div>
+
+            <div className="flex flex-col items-center gap-8 md:grid md:grid-cols-1 md:gap-16 lg:grid-cols-2">
+              <AnimatedSection direction="right" className="order-2 w-full md:order-1">
+                <h2 className="mb-6 hidden text-4xl font-bold tracking-tight md:block md:text-5xl">
                   {homepage.aboutSection.heading}
                 </h2>
-                <div className="prose prose-lg dark:prose-invert text-muted-foreground mb-10">
+                <div className="prose prose-base sm:prose-lg dark:prose-invert text-muted-foreground mx-auto mb-8 text-justify md:mb-10 md:text-left lg:mx-0">
                   {homepage.aboutSection.content ? (
                     <RichText data={homepage.aboutSection.content} />
                   ) : (
@@ -156,17 +163,22 @@ export default async function Home() {
                     </p>
                   )}
                 </div>
-                {homepage.aboutSection.ctaLabel && homepage.aboutSection.ctaUrl && (
-                  <Link
-                    href={homepage.aboutSection.ctaUrl}
-                    className={buttonVariants({ size: 'lg', className: 'rounded-full px-8' })}
-                  >
-                    {homepage.aboutSection.ctaLabel} <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                )}
+                <div className="flex justify-center md:justify-start">
+                  {homepage.aboutSection.ctaLabel && homepage.aboutSection.ctaUrl && (
+                    <Link
+                      href={homepage.aboutSection.ctaUrl}
+                      className={buttonVariants({
+                        size: 'lg',
+                        className: 'h-12 rounded-full px-6 text-sm md:h-14 md:px-8 md:text-base',
+                      })}
+                    >
+                      {homepage.aboutSection.ctaLabel} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  )}
+                </div>
               </AnimatedSection>
-              <AnimatedSection direction="left" delay={0.2}>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
+              <AnimatedSection direction="left" delay={0.2} className="order-1 w-full md:order-2">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl md:rounded-3xl">
                   {typeof homepage.aboutSection.image === 'object' &&
                   homepage.aboutSection.image?.url ? (
                     <Image
@@ -189,19 +201,22 @@ export default async function Home() {
 
       {/* 3. Impact Statistics */}
       {impactStats.length > 0 && (
-        <section className="bg-card relative overflow-hidden border-y py-24">
+        <section className="bg-card relative overflow-hidden border-y py-16 md:py-24">
           <Container className="relative z-10">
-            <AnimatedSection direction="up">
-              <SectionHeader
-                title={homepage.impactSection?.heading || 'Our Global Impact'}
-                description={
-                  homepage.impactSection?.description ||
-                  'Numbers that represent lives changed and futures empowered.'
-                }
-                align="center"
-              />
+            <AnimatedSection direction="up" className="mb-8 md:mb-12">
+              <div className="text-center">
+                <h2 className="mb-4 text-3xl font-bold tracking-tight md:mb-6 md:text-4xl lg:text-5xl">
+                  {homepage.impactSection?.heading || 'Our Global Impact'}
+                </h2>
+                <p className="text-muted-foreground mx-auto max-w-2xl text-base md:text-xl">
+                  {homepage.impactSection?.description ||
+                    'Numbers that represent lives changed and futures empowered.'}
+                </p>
+              </div>
             </AnimatedSection>
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+
+            {/* Desktop Grid */}
+            <div className="hidden grid-cols-2 gap-8 md:grid md:grid-cols-4">
               {(impactStats as unknown as ImpactStatistic[]).map((stat, idx: number) => {
                 const Icon =
                   typeof stat.icon === 'string' && stat.icon ? iconMap[stat.icon] || Heart : Heart;
@@ -232,22 +247,71 @@ export default async function Home() {
                 );
               })}
             </div>
+
+            {/* Mobile Marquee */}
+            <div className="relative flex overflow-hidden md:hidden">
+              <style>{`
+                 @keyframes marquee-impact {
+                   0% { transform: translateX(0%); }
+                   100% { transform: translateX(-50%); }
+                 }
+                 .animate-marquee-impact {
+                   animation: marquee-impact 15s linear infinite;
+                   width: max-content;
+                 }
+               `}</style>
+              <div className="animate-marquee-impact flex gap-4 pb-4">
+                {[...impactStats, ...impactStats].map((stat, idx: number) => {
+                  const Icon =
+                    typeof stat.icon === 'string' && stat.icon
+                      ? iconMap[stat.icon] || Heart
+                      : Heart;
+                  return (
+                    <div
+                      key={idx}
+                      className="bg-background border-border/40 w-48 shrink-0 rounded-2xl border p-5 text-center shadow-sm"
+                    >
+                      <div className="bg-accent/10 text-accent mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-xl">
+                        <Icon size={20} />
+                      </div>
+                      <div className="text-foreground mb-2 flex items-baseline justify-center text-3xl font-extrabold tracking-tighter">
+                        {stat.prefix && (
+                          <span className="text-muted-foreground mr-1 text-lg font-semibold">
+                            {stat.prefix}
+                          </span>
+                        )}
+                        {stat.value}
+                        {stat.suffix && (
+                          <span className="text-muted-foreground ml-1 text-lg font-semibold">
+                            {stat.suffix}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-muted-foreground text-xs font-semibold tracking-widest uppercase">
+                        {stat.label}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </Container>
         </section>
       )}
 
       {/* 4. Featured Programs */}
-      <section className="bg-background py-24 md:py-36">
+      <section className="bg-background py-16 md:py-36">
         <Container>
-          <AnimatedSection direction="up">
-            <SectionHeader
-              title={homepage.programsSection?.heading || 'Our Featured Programs'}
-              description={
-                homepage.programsSection?.description ||
-                'Discover how we are making a difference through education, mentorship, and community building.'
-              }
-              align="center"
-            />
+          <AnimatedSection direction="up" className="mb-8 md:mb-12">
+            <div className="text-center">
+              <h2 className="mb-4 text-3xl font-bold tracking-tight md:mb-6 md:text-4xl lg:text-5xl">
+                {homepage.programsSection?.heading || 'Our Featured Programs'}
+              </h2>
+              <p className="text-muted-foreground mx-auto max-w-2xl text-base md:text-xl">
+                {homepage.programsSection?.description ||
+                  'Discover how we are making a difference through education, mentorship, and community building.'}
+              </p>
+            </div>
           </AnimatedSection>
 
           {programs.length > 0 ? (
@@ -261,7 +325,7 @@ export default async function Home() {
 
                 return (
                   <AnimatedSection key={program.id || idx} direction="up" delay={idx * 0.1}>
-                    <div className="group bg-card border-border/40 flex h-full flex-1 flex-col overflow-hidden rounded-3xl border shadow-sm transition-all duration-500 hover:shadow-xl">
+                    <div className="group bg-card border-border/40 flex h-full flex-1 flex-col overflow-hidden rounded-2xl border shadow-sm transition-all duration-500 hover:shadow-xl md:rounded-3xl">
                       <div className="relative aspect-video overflow-hidden">
                         {coverImage ? (
                           <Image
@@ -272,13 +336,13 @@ export default async function Home() {
                           />
                         ) : (
                           <div className="bg-muted absolute inset-0 flex items-center justify-center">
-                            <BookOpen className="text-muted-foreground/30 h-12 w-12" />
+                            <BookOpen className="text-muted-foreground/30 h-10 w-10 md:h-12 md:w-12" />
                           </div>
                         )}
-                        <div className="absolute top-4 right-4 z-10">
+                        <div className="absolute top-3 right-3 z-10 md:top-4 md:right-4">
                           <span
                             className={cn(
-                              'rounded-full border px-3 py-1.5 text-xs font-bold tracking-wider uppercase shadow-sm backdrop-blur-md',
+                              'rounded-full border px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase shadow-sm backdrop-blur-md md:px-3 md:py-1.5 md:text-xs',
                               catColor,
                             )}
                           >
@@ -287,11 +351,11 @@ export default async function Home() {
                         </div>
                       </div>
 
-                      <div className="flex flex-1 flex-col p-8">
-                        <h3 className="group-hover:text-primary mb-3 line-clamp-2 text-2xl font-bold tracking-tight transition-colors">
+                      <div className="flex flex-1 flex-col p-5 md:p-8">
+                        <h3 className="group-hover:text-primary mb-2 line-clamp-2 text-xl font-bold tracking-tight transition-colors md:mb-3 md:text-2xl">
                           {program.title}
                         </h3>
-                        <p className="text-muted-foreground mb-8 line-clamp-3 flex-1 leading-relaxed">
+                        <p className="text-muted-foreground mb-6 line-clamp-3 flex-1 text-sm leading-relaxed md:mb-8 md:text-base">
                           {program.shortDescription}
                         </p>
 
@@ -302,7 +366,7 @@ export default async function Home() {
                               buttonVariants({
                                 variant: 'outline',
                                 className:
-                                  'group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary h-12 w-full rounded-full font-semibold transition-all duration-300',
+                                  'group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary h-10 w-full rounded-full text-sm font-semibold transition-all duration-300 md:h-12 md:text-base',
                               }),
                             )}
                           >
@@ -346,14 +410,14 @@ export default async function Home() {
       )}
 
       {/* 6. Upcoming Events */}
-      <section className="bg-background border-t py-24 md:py-36">
+      <section className="bg-background border-t py-16 md:py-36">
         <Container>
-          <div className="mb-16 flex flex-col justify-between md:flex-row md:items-end">
-            <AnimatedSection direction="left" className="max-w-2xl">
-              <h2 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
+          <div className="mb-10 flex flex-col justify-between gap-6 md:mb-16 md:flex-row md:items-end md:gap-0">
+            <AnimatedSection direction="left" className="max-w-2xl text-center md:text-left">
+              <h2 className="mb-4 text-3xl font-bold tracking-tight md:mb-6 md:text-4xl lg:text-5xl">
                 {homepage.eventsSection?.heading || 'Upcoming Events'}
               </h2>
-              <p className="text-muted-foreground text-xl leading-relaxed">
+              <p className="text-muted-foreground text-base leading-relaxed md:text-xl">
                 {homepage.eventsSection?.description ||
                   'Join us at our upcoming events to learn, connect, and grow with our community.'}
               </p>
@@ -364,7 +428,7 @@ export default async function Home() {
                 className={buttonVariants({
                   variant: 'ghost',
                   className:
-                    'text-secondary hover:text-secondary/80 hover:bg-secondary/10 rounded-full px-6',
+                    'text-secondary hover:text-secondary/80 hover:bg-secondary/10 h-12 rounded-full px-6',
                 })}
               >
                 View All Events <ArrowRight className="ml-2 h-4 w-4" />
@@ -380,21 +444,24 @@ export default async function Home() {
                   <AnimatedSection key={idx} direction="up" delay={idx * 0.1}>
                     <Link
                       href={`/events/${event.id}`}
-                      className="group bg-card border-border/40 hover:border-primary/50 relative block flex flex-row items-center gap-6 overflow-hidden rounded-3xl border p-6 shadow-sm transition-all duration-300 hover:shadow-md lg:flex-col lg:items-start"
+                      className="group bg-card border-border/40 hover:border-primary/50 relative block flex flex-row items-center gap-4 overflow-hidden rounded-2xl border p-4 shadow-sm transition-all duration-300 hover:shadow-md md:gap-6 md:rounded-3xl md:p-6 lg:flex-col lg:items-start"
                     >
-                      <div className="bg-primary/5 absolute top-0 right-0 -mt-4 -mr-4 h-24 w-24 rounded-bl-full transition-transform group-hover:scale-150" />
-                      <div className="bg-background relative z-10 flex h-22 w-22 min-w-[5.5rem] shrink-0 flex-col items-center justify-center rounded-2xl border shadow-sm">
-                        <span className="text-secondary text-sm font-bold tracking-wider uppercase">
+                      <div className="bg-primary/5 absolute top-0 right-0 -mt-4 -mr-4 h-16 w-16 rounded-bl-full transition-transform group-hover:scale-150 md:h-24 md:w-24" />
+                      <div className="bg-background relative z-10 flex h-16 w-16 min-w-[4rem] shrink-0 flex-col items-center justify-center rounded-xl border shadow-sm md:h-22 md:w-22 md:min-w-[5.5rem] md:rounded-2xl">
+                        <span className="text-secondary text-[10px] font-bold tracking-wider uppercase md:text-sm">
                           {eventDate.toLocaleString('default', { month: 'short' })}
                         </span>
-                        <span className="text-3xl font-black">{eventDate.getDate()}</span>
+                        <span className="text-xl font-black md:text-3xl">
+                          {eventDate.getDate()}
+                        </span>
                       </div>
                       <div className="relative z-10">
-                        <h3 className="group-hover:text-secondary mb-3 line-clamp-2 text-xl font-bold transition-colors">
+                        <h3 className="group-hover:text-secondary mb-1 line-clamp-2 text-lg font-bold transition-colors md:mb-3 md:text-xl">
                           {event.title}
                         </h3>
-                        <div className="text-muted-foreground flex items-center text-sm font-medium">
-                          <Calendar className="text-secondary/70 mr-2 h-4 w-4" /> {event.location}
+                        <div className="text-muted-foreground flex items-center text-xs font-medium md:text-sm">
+                          <Calendar className="text-secondary/70 mr-2 h-3 w-3 md:h-4 md:w-4" />{' '}
+                          {event.location}
                         </div>
                       </div>
                     </Link>

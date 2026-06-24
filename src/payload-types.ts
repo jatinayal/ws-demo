@@ -187,3 +187,71 @@ export interface Gallery {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface PrivacyPolicy {
+  id: string;
+  title: string;
+  lastUpdated: string;
+  sections: {
+    title: string;
+    content: Record<string, unknown>;
+    id?: string | null;
+  }[];
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface TermsOfService {
+  id: string;
+  title: string;
+  lastUpdated: string;
+  sections: {
+    title: string;
+    content: Record<string, unknown>;
+    id?: string | null;
+  }[];
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface GetInvolved {
+  id: string;
+  hero: {
+    title: string;
+    subtitle: string;
+    backgroundImage?: string | Media | null;
+  };
+  volunteerSection: {
+    title: string;
+    description: string;
+    benefits?: { benefit?: string | null; id?: string | null }[] | null;
+  };
+  partnerSection: {
+    title: string;
+    description: string;
+    partnerTypes?:
+      | { type?: string | null; description?: string | null; id?: string | null }[]
+      | null;
+  };
+  donateSection: {
+    title: string;
+    description: string;
+  };
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
