@@ -16,10 +16,20 @@ import {
   Link as LinkIcon,
   AlertCircle,
   HelpCircle,
+  BookOpen,
 } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import { Event, Program } from '@/payload-types';
+
+const categoryLabels: Record<string, string> = {
+  education: 'Education',
+  leadership: 'Leadership',
+  entrepreneurship: 'Entrepreneurship',
+  wellness: 'Emotional Wellness',
+  community: 'Community',
+};
 
 // Using a server action to handle registrations
 import { submitEventRegistration } from './actions';
@@ -64,6 +74,7 @@ export default async function EventDetailPage({ params, searchParams }: EventPag
     collection: 'events',
     where: { slug: { equals: slug } },
     limit: 1,
+    depth: 2,
   });
 
   if (!events.docs.length) {
@@ -487,6 +498,129 @@ export default async function EventDetailPage({ params, searchParams }: EventPag
                   );
                 },
               )}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 4. Related Events */}
+      {event.relatedEvents && event.relatedEvents.length > 0 && (
+        <section className="bg-background border-t py-12 md:py-24">
+          <Container>
+            <AnimatedSection direction="up" className="mb-8 md:mb-12">
+              <h2 className="flex items-center justify-center text-2xl font-bold md:text-3xl">
+                <Calendar className="text-primary mr-2 h-5 w-5 md:mr-3 md:h-8 md:w-8" /> Related
+                Events
+              </h2>
+            </AnimatedSection>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {event.relatedEvents.map((relatedEvent: Event | string, idx: number) => {
+                if (typeof relatedEvent !== 'object') return null;
+                const rCoverImage = getMediaUrl(relatedEvent.coverImage) || null;
+                const rDate = new Date(relatedEvent.date);
+
+                return (
+                  <AnimatedSection key={relatedEvent.id} direction="up" delay={idx * 0.1}>
+                    <Link href={`/events/${relatedEvent.slug}`} className="group block h-full">
+                      <div className="bg-card border-border/40 flex h-full flex-col overflow-hidden rounded-2xl border shadow-sm transition-all duration-500 hover:shadow-xl">
+                        <div className="relative aspect-video overflow-hidden">
+                          {rCoverImage ? (
+                            <Image
+                              src={rCoverImage}
+                              alt={relatedEvent.title}
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="bg-muted absolute inset-0 flex items-center justify-center" />
+                          )}
+                        </div>
+                        <div className="flex flex-1 flex-col p-5 sm:p-6">
+                          <div className="text-muted-foreground mb-3 flex flex-wrap items-center gap-4 text-xs font-medium">
+                            <span className="flex items-center">
+                              <Calendar className="text-primary mr-1.5 h-3.5 w-3.5" />
+                              {rDate.toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric',
+                              })}
+                            </span>
+                            <span className="flex items-center">
+                              <MapPin className="text-primary mr-1.5 h-3.5 w-3.5" />
+                              {relatedEvent.location}
+                            </span>
+                          </div>
+                          <h4 className="group-hover:text-primary mb-3 line-clamp-2 text-lg font-bold transition-colors">
+                            {relatedEvent.title}
+                          </h4>
+                          {relatedEvent.shortDescription && (
+                            <p className="text-muted-foreground mb-4 line-clamp-2 text-sm leading-relaxed">
+                              {relatedEvent.shortDescription}
+                            </p>
+                          )}
+                          <div className="border-border/40 mt-auto flex items-center justify-between border-t pt-4">
+                            <span className="text-primary flex items-center text-sm font-bold transition-transform group-hover:translate-x-1">
+                              View Event <ArrowLeft className="ml-1 h-3.5 w-3.5 rotate-180" />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </AnimatedSection>
+                );
+              })}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* 5. Related Programs */}
+      {event.relatedPrograms && event.relatedPrograms.length > 0 && (
+        <section className="bg-muted/10 py-12 md:py-24">
+          <Container>
+            <AnimatedSection direction="up" className="mb-8 md:mb-12">
+              <h2 className="flex items-center justify-center text-2xl font-bold md:text-3xl">
+                <BookOpen className="text-primary mr-2 h-5 w-5 md:mr-3 md:h-8 md:w-8" /> Related
+                Programs
+              </h2>
+            </AnimatedSection>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 md:gap-8">
+              {event.relatedPrograms.map((relatedProgram: Program | string, idx: number) => {
+                if (typeof relatedProgram !== 'object') return null;
+                const rCoverImage = getMediaUrl(relatedProgram.coverImage) || null;
+                return (
+                  <AnimatedSection key={relatedProgram.id} direction="up" delay={idx * 0.1}>
+                    <Link href={`/programs/${relatedProgram.slug}`} className="group block h-full">
+                      <div className="bg-card border-border/40 flex h-full flex-col overflow-hidden rounded-2xl border shadow-sm transition-all duration-500 hover:shadow-xl md:rounded-3xl">
+                        <div className="relative aspect-[4/3] overflow-hidden md:aspect-video">
+                          {rCoverImage ? (
+                            <Image
+                              src={rCoverImage}
+                              alt={relatedProgram.title}
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="bg-muted absolute inset-0 flex items-center justify-center" />
+                          )}
+                        </div>
+                        <div className="p-3 sm:p-4 md:p-6">
+                          <span className="text-primary mb-1 block text-[9px] font-bold tracking-wider uppercase sm:text-[10px] md:mb-2 md:text-xs">
+                            {relatedProgram.category
+                              ? categoryLabels[
+                                  relatedProgram.category as keyof typeof categoryLabels
+                                ] || relatedProgram.category
+                              : ''}
+                          </span>
+                          <h4 className="group-hover:text-primary line-clamp-2 text-sm leading-snug font-bold transition-colors sm:text-base md:line-clamp-none md:text-xl">
+                            {relatedProgram.title}
+                          </h4>
+                        </div>
+                      </div>
+                    </Link>
+                  </AnimatedSection>
+                );
+              })}
             </div>
           </Container>
         </section>

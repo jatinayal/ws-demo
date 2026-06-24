@@ -113,11 +113,7 @@ export default async function Home() {
           homepage.hero?.subheading ||
           'Empowering women worldwide to achieve their full potential through education, resources, and community.'
         }
-        backgroundImage={
-          typeof homepage.hero?.backgroundImage === 'object'
-            ? getMediaUrl(homepage.hero.backgroundImage) || undefined
-            : undefined
-        }
+        backgroundImage={getMediaUrl(homepage.hero?.backgroundImage) || undefined}
         primaryCta={
           homepage.hero?.callsToAction?.[0]
             ? {
@@ -182,8 +178,7 @@ export default async function Home() {
               </AnimatedSection>
               <AnimatedSection direction="left" delay={0.2} className="order-1 w-full md:order-2">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl md:rounded-3xl">
-                  {typeof homepage.aboutSection.image === 'object' &&
-                  getMediaUrl(homepage.aboutSection.image) ? (
+                  {getMediaUrl(homepage.aboutSection.image) ? (
                     <Image
                       src={getMediaUrl(homepage.aboutSection.image)}
                       alt="About Us"
@@ -402,10 +397,7 @@ export default async function Home() {
           testimonials={stories.map((story: SuccessStory) => ({
             personName: story.personName,
             quote: story.quote,
-            image:
-              typeof story.image === 'object'
-                ? getMediaUrl(story.image) || '/placeholder.png'
-                : '/placeholder.png',
+            image: getMediaUrl(story.image) || '/placeholder.png',
             program: typeof story.program === 'object' ? story.program?.title : undefined,
           }))}
         />
@@ -503,10 +495,7 @@ export default async function Home() {
           }
           partners={partners.map((partner: Partner) => ({
             name: partner.name,
-            logo:
-              typeof partner.logo === 'object'
-                ? getMediaUrl(partner.logo) || '/placeholder.png'
-                : '/placeholder.png',
+            logo: getMediaUrl(partner.logo) || '/placeholder.png',
             websiteUrl: partner.websiteUrl || '#',
           }))}
         />
