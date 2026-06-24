@@ -46,6 +46,8 @@ const categoryLabels: Record<string, string> = {
   community: 'Community',
 };
 
+export const revalidate = 0;
+
 export default async function Home() {
   const payload = await getPayloadClient();
   const homepage = await getHomepage();
