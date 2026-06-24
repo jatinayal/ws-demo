@@ -68,7 +68,7 @@ export default async function ImpactPage() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* 1. Hero Section */}
-      <section className="bg-primary text-primary-foreground relative overflow-hidden pt-32 pb-24 md:pt-48 md:pb-36">
+      <section className="bg-primary text-primary-foreground relative overflow-hidden pt-28 pb-16 md:pt-48 md:pb-36">
         <div className="absolute inset-0 z-0 bg-[url('/noise.png')] opacity-[0.05] mix-blend-overlay" />
         {heroCover && (
           <div className="absolute inset-0 z-0 opacity-20">
@@ -78,10 +78,10 @@ export default async function ImpactPage() {
         )}
         <Container className="relative z-10 text-center">
           <AnimatedSection direction="up" className="mx-auto max-w-4xl">
-            <h1 className="mb-6 text-5xl font-extrabold tracking-tight md:text-7xl">
+            <h1 className="mb-4 text-3xl font-extrabold tracking-tight sm:text-4xl md:mb-6 md:text-7xl">
               {impactData.hero?.heading || 'Our Global Impact'}
             </h1>
-            <p className="text-xl leading-relaxed font-medium text-white/90 md:text-2xl">
+            <p className="text-base leading-relaxed font-medium text-white/90 md:text-2xl">
               {impactData.hero?.subheading}
             </p>
           </AnimatedSection>
@@ -90,27 +90,31 @@ export default async function ImpactPage() {
 
       {/* 2. Global Statistics Bar */}
       {globalStats && globalStats.length > 0 && (
-        <section className="bg-card relative z-30 -mt-10 rounded-t-[3rem] border-b py-12 shadow-[0_-20px_40px_rgba(0,0,0,0.1)] md:py-16">
+        <section className="bg-card relative z-30 -mt-6 rounded-t-[2rem] border-b py-8 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] md:-mt-10 md:rounded-t-[3rem] md:py-16 md:shadow-[0_-20px_40px_rgba(0,0,0,0.1)]">
           <Container>
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4 md:gap-8">
               {(globalStats as unknown as ImpactStatistic[]).map((stat, idx: number) => {
                 const Icon = stat.icon ? iconMap[stat.icon] || TrendingUp : TrendingUp;
                 return (
                   <AnimatedSection key={idx} direction="up" delay={idx * 0.1}>
                     <div className="group text-center">
-                      <div className="bg-accent/10 text-accent mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl transition-transform group-hover:scale-110">
-                        <Icon size={24} />
+                      <div className="bg-accent/10 text-accent mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg transition-transform group-hover:scale-110 md:mb-4 md:h-12 md:w-12 md:rounded-xl">
+                        <Icon className="h-5 w-5 md:h-6 md:w-6" />
                       </div>
-                      <div className="text-foreground mb-2 flex items-baseline justify-center text-4xl font-extrabold tracking-tighter">
+                      <div className="text-foreground mb-1 flex items-baseline justify-center text-2xl font-extrabold tracking-tighter md:mb-2 md:text-4xl">
                         {stat.prefix && (
-                          <span className="mr-1 text-xl opacity-80">{stat.prefix}</span>
+                          <span className="mr-0.5 text-sm opacity-80 md:mr-1 md:text-xl">
+                            {stat.prefix}
+                          </span>
                         )}
                         <AnimatedCounter value={stat.value || 0} />
                         {stat.suffix && (
-                          <span className="ml-1 text-xl opacity-80">{stat.suffix}</span>
+                          <span className="ml-0.5 text-sm opacity-80 md:ml-1 md:text-xl">
+                            {stat.suffix}
+                          </span>
                         )}
                       </div>
-                      <div className="text-muted-foreground text-xs font-bold tracking-widest uppercase">
+                      <div className="text-muted-foreground text-[10px] font-bold tracking-wide uppercase md:text-xs md:tracking-widest">
                         {stat.label}
                       </div>
                     </div>
@@ -124,9 +128,9 @@ export default async function ImpactPage() {
 
       {/* 3. Geographic Reach */}
       {impactData.geographicReach && (
-        <section className="bg-muted/30 py-24 md:py-36">
+        <section className="bg-muted/30 py-12 md:py-36">
           <Container>
-            <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+            <div className="grid grid-cols-1 items-center gap-8 md:gap-16 lg:grid-cols-2">
               <AnimatedSection direction="right">
                 <SectionHeader
                   title={impactData.geographicReach.heading}
@@ -135,7 +139,7 @@ export default async function ImpactPage() {
 
                 {impactData.geographicReach.regions &&
                   impactData.geographicReach.regions.length > 0 && (
-                    <div className="mt-10 space-y-6">
+                    <div className="mt-8 space-y-4 md:mt-10 md:space-y-6">
                       {impactData.geographicReach.regions.map(
                         (
                           region: {
@@ -146,17 +150,19 @@ export default async function ImpactPage() {
                         ) => (
                           <div
                             key={idx}
-                            className="bg-card border-border/50 flex items-center justify-between rounded-2xl border p-6 shadow-sm transition-shadow hover:shadow-md"
+                            className="bg-card border-border/50 flex items-center justify-between rounded-xl border p-4 shadow-sm transition-shadow hover:shadow-md md:rounded-2xl md:p-6"
                           >
                             <div className="flex items-center">
-                              <Globe className="text-accent mr-4 h-6 w-6" />
-                              <span className="text-lg font-bold">{region.regionName}</span>
+                              <Globe className="text-accent mr-3 h-5 w-5 shrink-0 md:mr-4 md:h-6 md:w-6" />
+                              <span className="text-base font-bold md:text-lg">
+                                {region.regionName}
+                              </span>
                             </div>
                             <div className="text-right">
-                              <div className="text-accent text-2xl font-black">
+                              <div className="text-accent text-xl font-black md:text-2xl">
                                 <AnimatedCounter value={region.beneficiariesCount || 0} />+
                               </div>
-                              <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+                              <div className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase md:text-xs">
                                 Beneficiaries
                               </div>
                             </div>
@@ -168,13 +174,18 @@ export default async function ImpactPage() {
               </AnimatedSection>
 
               <AnimatedSection direction="left" delay={0.2}>
-                <div className="bg-card border-border/50 relative flex aspect-square items-center justify-center overflow-hidden rounded-3xl border p-8 shadow-xl lg:aspect-[4/3]">
+                <div className="bg-card border-border/50 relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border p-2 shadow-md md:rounded-3xl md:p-8 md:shadow-xl lg:aspect-[4/3]">
                   {mapImage ? (
-                    <Image src={mapImage} alt="Global Map" fill className="object-contain p-8" />
+                    <Image
+                      src={mapImage}
+                      alt="Global Map"
+                      fill
+                      className="object-contain p-0 md:p-8"
+                    />
                   ) : (
                     <div className="text-muted-foreground text-center">
-                      <Globe className="mx-auto mb-4 h-32 w-32 opacity-20" />
-                      <p>Global presence mapped across regions.</p>
+                      <Globe className="mx-auto mb-4 h-20 w-20 opacity-20 md:h-32 md:w-32" />
+                      <p className="text-sm md:text-base">Global presence mapped across regions.</p>
                     </div>
                   )}
                 </div>
@@ -186,15 +197,15 @@ export default async function ImpactPage() {
 
       {/* 4. Community Transformation */}
       {impactData.communityTransformation && (
-        <section className="bg-background relative py-24 md:py-36">
+        <section className="bg-background relative py-12 md:py-36">
           <div className="bg-accent/5 pointer-events-none absolute top-1/2 left-0 -mt-40 -ml-40 h-96 w-96 rounded-full blur-3xl" />
           <Container className="relative z-10">
-            <AnimatedSection direction="up" className="mx-auto mb-16 max-w-3xl text-center">
-              <h2 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl">
+            <AnimatedSection direction="up" className="mx-auto mb-8 max-w-3xl text-center md:mb-16">
+              <h2 className="mb-4 text-2xl font-bold tracking-tight md:mb-6 md:text-5xl">
                 {impactData.communityTransformation.heading}
               </h2>
               {impactData.communityTransformation.content && (
-                <div className="prose prose-lg dark:prose-invert text-muted-foreground mx-auto leading-relaxed">
+                <div className="prose prose-base md:prose-lg dark:prose-invert text-muted-foreground mx-auto leading-relaxed">
                   <RichText data={impactData.communityTransformation.content} />
                 </div>
               )}
@@ -202,7 +213,7 @@ export default async function ImpactPage() {
 
             {impactData.communityTransformation.metrics &&
               impactData.communityTransformation.metrics.length > 0 && (
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <div className="border-border bg-card grid grid-cols-2 overflow-hidden rounded-xl border-t border-l shadow-none md:rounded-2xl lg:grid-cols-3">
                   {impactData.communityTransformation.metrics.map(
                     (
                       metric: {
@@ -215,16 +226,21 @@ export default async function ImpactPage() {
                     ) => {
                       const Icon = metric.icon ? iconMap[metric.icon] || Activity : Activity;
                       return (
-                        <AnimatedSection key={idx} direction="up" delay={idx * 0.1}>
-                          <div className="bg-card border-border/40 hover:border-accent/30 group h-full rounded-3xl border p-8 text-center shadow-sm transition-all duration-300 hover:shadow-xl">
-                            <div className="bg-accent/10 text-accent group-hover:bg-accent mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110 group-hover:text-white">
-                              <Icon size={32} />
+                        <AnimatedSection
+                          key={idx}
+                          direction="up"
+                          delay={idx * 0.1}
+                          className="border-border flex h-full border-r border-b"
+                        >
+                          <div className="flex aspect-square w-full flex-col items-center justify-center p-4 py-8 text-center md:aspect-auto md:p-10">
+                            <div className="text-accent mx-auto mb-3 flex shrink-0 items-center justify-center md:mb-4">
+                              <Icon className="h-6 w-6 md:h-10 md:w-10" />
                             </div>
-                            <div className="group-hover:text-accent mb-2 text-5xl font-black tracking-tighter transition-colors">
+                            <div className="text-foreground mb-1 text-2xl font-black tracking-tighter md:mb-2 md:text-5xl">
                               <AnimatedCounter value={metric.value || 0} />
                               {metric.suffix && <span>{metric.suffix}</span>}
                             </div>
-                            <p className="text-muted-foreground text-lg font-semibold">
+                            <p className="text-muted-foreground text-xs leading-snug font-semibold sm:text-sm md:text-lg">
                               {metric.label}
                             </p>
                           </div>
@@ -260,15 +276,20 @@ export default async function ImpactPage() {
                 </AnimatedSection>
               </div>
 
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              <div className="grid grid-cols-2 gap-3 md:gap-8">
                 {(impactData.featuredSuccessStories.stories as unknown as SuccessStory[]).map(
                   (story, idx: number) => {
                     if (typeof story !== 'object') return null;
                     const coverImage = typeof story.image === 'object' ? story.image?.url : null;
                     return (
-                      <AnimatedSection key={story.id} direction="up" delay={idx * 0.1}>
-                        <div className="group bg-card border-border/40 flex h-full flex-col overflow-hidden rounded-3xl border shadow-sm transition-all duration-500 hover:shadow-xl md:flex-row">
-                          <div className="relative aspect-video w-full overflow-hidden md:aspect-auto md:w-2/5">
+                      <AnimatedSection
+                        key={story.id}
+                        direction="up"
+                        delay={idx * 0.1}
+                        className="h-full"
+                      >
+                        <div className="group bg-card border-border/40 flex h-full flex-col overflow-hidden rounded-2xl border shadow-sm transition-all duration-500 hover:shadow-xl md:flex-row md:rounded-3xl">
+                          <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-auto md:w-2/5">
                             {coverImage ? (
                               <Image
                                 src={coverImage}
@@ -280,27 +301,30 @@ export default async function ImpactPage() {
                               <div className="bg-muted absolute inset-0 flex items-center justify-center" />
                             )}
                           </div>
-                          <div className="flex flex-1 flex-col justify-center p-8">
-                            <div className="mb-4">
-                              <QuoteIcon className="text-primary/20 mb-2 h-8 w-8" />
-                              <p className="text-foreground/80 line-clamp-3 text-lg leading-relaxed font-medium italic">
+                          <div className="flex flex-1 flex-col justify-between p-3 sm:p-4 md:p-8">
+                            <div className="mb-2 md:mb-4">
+                              <QuoteIcon className="text-primary/20 mb-1 h-5 w-5 md:mb-2 md:h-8 md:w-8" />
+                              <p className="text-foreground/80 line-clamp-3 text-[11px] leading-relaxed font-medium italic md:line-clamp-none md:text-lg">
                                 &quot;{story.quote}&quot;
                               </p>
                             </div>
                             <div>
-                              <h4 className="text-xl font-bold">{story.personName}</h4>
+                              <h4 className="line-clamp-1 text-sm font-bold md:text-xl">
+                                {story.personName}
+                              </h4>
                               {story.beneficiaryDetails?.occupation && (
-                                <p className="text-primary text-sm font-semibold">
+                                <p className="text-primary line-clamp-1 text-[10px] font-semibold md:text-sm">
                                   {story.beneficiaryDetails.occupation}
                                 </p>
                               )}
                             </div>
-                            <div className="mt-6">
+                            <div className="mt-2 md:mt-6">
                               <Link
                                 href={`/success-stories/${story.slug}`}
-                                className="text-foreground hover:text-primary flex items-center text-sm font-bold transition-colors"
+                                className="text-foreground hover:text-primary flex items-center text-[10px] font-bold transition-colors md:text-sm"
                               >
-                                Read Full Story <ArrowRight className="ml-1 h-4 w-4" />
+                                Read Full Story{' '}
+                                <ArrowRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
                               </Link>
                             </div>
                           </div>
@@ -316,23 +340,23 @@ export default async function ImpactPage() {
 
       {/* 6. Annual Report */}
       {impactData.annualReport && (
-        <section className="bg-background py-24">
+        <section className="bg-background py-12 md:py-24">
           <Container>
             <AnimatedSection direction="up">
-              <div className="bg-primary text-primary-foreground relative flex flex-col items-center justify-between overflow-hidden rounded-3xl p-10 shadow-2xl md:flex-row md:p-16">
+              <div className="bg-primary text-primary-foreground relative flex flex-col items-center justify-center overflow-hidden rounded-2xl p-8 text-center md:rounded-3xl md:p-16">
                 <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.05] mix-blend-overlay" />
                 <div className="absolute top-0 right-0 -mt-20 -mr-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
 
-                <div className="relative z-10 mb-8 md:mb-0 md:w-2/3">
-                  <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+                <div className="relative z-10 mx-auto mb-6 max-w-2xl md:mb-8">
+                  <h2 className="mb-3 text-center text-2xl font-bold md:mb-4 md:text-4xl">
                     {impactData.annualReport.heading}
                   </h2>
-                  <p className="text-lg leading-relaxed text-white/80">
+                  <p className="text-center text-base leading-relaxed text-white/80 md:text-lg">
                     {impactData.annualReport.description}
                   </p>
                 </div>
 
-                <div className="relative z-10">
+                <div className="relative z-10 mx-auto">
                   <Link
                     href={reportUrl || '#'}
                     target={reportUrl ? '_blank' : undefined}
@@ -341,11 +365,11 @@ export default async function ImpactPage() {
                         variant: 'secondary',
                         size: 'lg',
                         className:
-                          'text-primary flex h-14 items-center rounded-full bg-white px-8 font-bold shadow-lg transition-all hover:scale-105 hover:bg-white/90',
+                          'text-primary flex h-10 items-center rounded-full bg-white px-6 text-sm font-bold shadow-lg transition-all hover:scale-105 hover:bg-white/90 md:h-12 md:px-8 md:text-base',
                       }),
                     )}
                   >
-                    <Download className="mr-3 h-5 w-5" />{' '}
+                    <Download className="mr-2 h-4 w-4 shrink-0 md:mr-3 md:h-5 md:w-5" />{' '}
                     {impactData.annualReport.downloadLabel || 'Download Report'}
                   </Link>
                 </div>

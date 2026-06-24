@@ -1,5 +1,6 @@
 import config from '@payload-config';
 import '@payloadcms/next/css';
+import '@/components/admin/custom-login.scss';
 import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts';
 import React from 'react';
 import { importMap } from './admin/importMap.js';

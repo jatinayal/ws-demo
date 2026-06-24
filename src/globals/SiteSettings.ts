@@ -22,10 +22,26 @@ export const SiteSettings: GlobalConfig = {
     {
       name: 'contactEmail',
       type: 'email',
+      validate: (val: string | null | undefined) => {
+        if (!val) return true;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(val)) return true;
+        return 'Please enter a valid email address';
+      },
     },
     {
       name: 'contactPhone',
       type: 'text',
+      validate: (val: string | null | undefined) => {
+        if (!val) return true;
+        const phoneRegex = /^\d{10}$/;
+        if (phoneRegex.test(val)) return true;
+        return 'Phone number must be exactly 10 digits';
+      },
+      admin: {
+        description:
+          'Enter exactly 10 digits. The +91 prefix is added automatically on the frontend.',
+      },
     },
     {
       name: 'address',

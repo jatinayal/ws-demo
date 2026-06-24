@@ -42,12 +42,14 @@ export function ContentBlock({
         className={hasImage && imageAlignment === 'left' ? 'lg:order-2' : ''}
       >
         {Icon && (
-          <div className="bg-primary/10 text-primary mb-6 flex h-16 w-16 items-center justify-center rounded-2xl transition-transform hover:scale-110">
+          <div className="bg-primary/10 text-primary mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl transition-transform hover:scale-110 md:mx-0">
             <Icon size={32} />
           </div>
         )}
-        <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">{heading}</h2>
-        <div className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed">
+        <h2 className="mb-6 text-center text-3xl font-bold tracking-tight md:text-left md:text-4xl">
+          {heading}
+        </h2>
+        <div className="prose prose-lg dark:prose-invert text-muted-foreground text-justify leading-relaxed md:text-left">
           {content ? (
             <RichText data={content as unknown as SerializedEditorState} />
           ) : (
@@ -62,12 +64,13 @@ export function ContentBlock({
           delay={0.2}
           className={imageAlignment === 'left' ? 'lg:order-1' : ''}
         >
-          <div className="ring-border/50 relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl ring-1">
+          <div className="relative">
             <Image
               src={image}
               alt={imageAlt}
-              fill
-              className="object-cover transition-transform duration-700 hover:scale-105"
+              width={1200}
+              height={900}
+              className="h-auto w-full transition-transform duration-700 md:hover:scale-105"
             />
           </div>
         </AnimatedSection>

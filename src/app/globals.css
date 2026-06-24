@@ -1,6 +1,6 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -8,8 +8,16 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
   --font-heading: var(--font-sans);
+
+  /* Soften typography weights for an NGO aesthetic */
+  --font-weight-bold: 600; /* Re-map bold to semibold */
+  --font-weight-extrabold: 700; /* Re-map extrabold to bold */
+  --font-weight-black: 800; /* Re-map black to extrabold */
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,72 +57,76 @@
 }
 
 :root {
-  --background: #FFFFFF;
+  --background: #ffffff;
   --foreground: #444444;
-  --card: #F3E7C0;
+  --card: #f3e7c0;
   --card-foreground: #444444;
-  --popover: #FFFFFF;
+  --popover: #ffffff;
   --popover-foreground: #444444;
-  --primary: #E56A2D;
-  --primary-foreground: #FFFFFF;
-  --secondary: #1F3FAF;
-  --secondary-foreground: #FFFFFF;
-  --muted: #F7D8C6;
+  --primary: #e56a2d;
+  --primary-foreground: #ffffff;
+  --secondary: #1f3faf;
+  --secondary-foreground: #ffffff;
+  --muted: #f7d8c6;
   --muted-foreground: #666666;
-  --accent: #0B5A2A;
-  --accent-foreground: #FFFFFF;
-  --destructive: #EF4444;
-  --border: #E5E7EB;
-  --input: #E5E7EB;
-  --ring: #1F3FAF;
-  --chart-1: #E56A2D;
-  --chart-2: #1F3FAF;
-  --chart-3: #0B5A2A;
-  --chart-4: #F3E7C0;
-  --chart-5: #F7D8C6;
+  --accent: #0b5a2a;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #1f3faf;
+  --chart-1: #e56a2d;
+  --chart-2: #1f3faf;
+  --chart-3: #0b5a2a;
+  --chart-4: #f3e7c0;
+  --chart-5: #f7d8c6;
   --radius: 0.75rem;
-  --sidebar: #FFFFFF;
+  --sidebar: #ffffff;
   --sidebar-foreground: #444444;
-  --sidebar-primary: #1F3FAF;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F3E7C0;
+  --sidebar-primary: #1f3faf;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3e7c0;
   --sidebar-accent-foreground: #444444;
-  --sidebar-border: #E5E7EB;
-  --sidebar-ring: #1F3FAF;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #1f3faf;
+
+  /* Payload Admin Typography Overrides */
+  --font-body: var(--font-sans), sans-serif;
+  --font-heading: var(--font-sans), sans-serif;
 }
 
 .dark {
-  --background: #1A1A1A;
-  --foreground: #F3E7C0;
-  --card: #2B2B2B;
-  --card-foreground: #F3E7C0;
-  --popover: #1A1A1A;
-  --popover-foreground: #F3E7C0;
-  --primary: #E56A2D;
-  --primary-foreground: #FFFFFF;
-  --secondary: #1F3FAF;
-  --secondary-foreground: #FFFFFF;
+  --background: #1a1a1a;
+  --foreground: #f3e7c0;
+  --card: #2b2b2b;
+  --card-foreground: #f3e7c0;
+  --popover: #1a1a1a;
+  --popover-foreground: #f3e7c0;
+  --primary: #e56a2d;
+  --primary-foreground: #ffffff;
+  --secondary: #1f3faf;
+  --secondary-foreground: #ffffff;
   --muted: #333333;
-  --muted-foreground: #A3A3A3;
-  --accent: #0B5A2A;
-  --accent-foreground: #FFFFFF;
-  --destructive: #F87171;
+  --muted-foreground: #a3a3a3;
+  --accent: #0b5a2a;
+  --accent-foreground: #ffffff;
+  --destructive: #f87171;
   --border: #404040;
   --input: #404040;
-  --ring: #1F3FAF;
-  --chart-1: #E56A2D;
-  --chart-2: #1F3FAF;
-  --chart-3: #0B5A2A;
-  --chart-4: #F3E7C0;
-  --chart-5: #F7D8C6;
-  --sidebar: #1A1A1A;
-  --sidebar-foreground: #F3E7C0;
-  --sidebar-primary: #1F3FAF;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #2B2B2B;
-  --sidebar-accent-foreground: #F3E7C0;
+  --ring: #1f3faf;
+  --chart-1: #e56a2d;
+  --chart-2: #1f3faf;
+  --chart-3: #0b5a2a;
+  --chart-4: #f3e7c0;
+  --chart-5: #f7d8c6;
+  --sidebar: #1a1a1a;
+  --sidebar-foreground: #f3e7c0;
+  --sidebar-primary: #1f3faf;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2b2b2b;
+  --sidebar-accent-foreground: #f3e7c0;
   --sidebar-border: #404040;
-  --sidebar-ring: #1F3FAF;
+  --sidebar-ring: #1f3faf;
 }
 
 @layer base {
@@ -122,9 +134,17 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground leading-relaxed tracking-normal;
   }
   html {
     @apply font-sans;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply leading-tight tracking-tight;
   }
 }
