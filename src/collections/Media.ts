@@ -14,7 +14,7 @@ export const Media: CollectionConfig = {
     useAsTitle: 'alt',
   },
   upload: {
-    staticDir: 'media',
+    disableLocalStorage: true,
     imageSizes: [
       {
         name: 'thumbnail',
@@ -45,6 +45,20 @@ export const Media: CollectionConfig = {
       required: true,
       admin: {
         description: 'Alternative text is required for accessibility and SEO.',
+      },
+    },
+    {
+      name: 'cloudinary_secure_url',
+      type: 'text',
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: 'cloudinary_public_id',
+      type: 'text',
+      admin: {
+        hidden: true,
       },
     },
   ],

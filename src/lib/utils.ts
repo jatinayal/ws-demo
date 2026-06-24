@@ -34,6 +34,11 @@ export function getMediaUrl(media?: unknown): string {
     return cloudinaryData.secure_url;
   }
 
+  // Check if it's stored natively on the root object
+  if (typeof mediaObj.cloudinary_secure_url === 'string') {
+    return mediaObj.cloudinary_secure_url;
+  }
+
   // Fall back to the default URL
   return typeof mediaObj.url === 'string' ? mediaObj.url : '';
 }

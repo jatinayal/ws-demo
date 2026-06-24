@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getSiteSettings } from './payload';
+import { getMediaUrl } from '@/lib/utils';
 
 export interface SEOProps {
   title?: string;
@@ -25,8 +26,8 @@ export const constructMetadata = async (options: SEOProps = {}): Promise<Metadat
 
   const ogImage = customImage
     ? customImage
-    : typeof siteSettings?.seoDefaultImage === 'object' && siteSettings?.seoDefaultImage?.url
-      ? siteSettings.seoDefaultImage.url
+    : typeof siteSettings?.seoDefaultImage === 'object'
+      ? getMediaUrl(siteSettings.seoDefaultImage) || '/logo.png'
       : '/logo.png';
 
   const res: Metadata = {
