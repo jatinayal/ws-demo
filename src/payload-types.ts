@@ -97,6 +97,7 @@ export interface Event {
   faqs?: { id?: string; question: string; answer: string }[] | null;
   gallery?: { id?: string; image: string | Media }[] | null;
   relatedPrograms?: (string | Program)[] | null;
+  relatedEvents?: (string | Event)[] | null;
   createdAt: string;
   updatedAt: string;
 }

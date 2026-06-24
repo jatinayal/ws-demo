@@ -21,24 +21,42 @@ export function formatPhoneNumber(phone?: string | null): string {
 export function getMediaUrl(media?: unknown): string {
   if (!media) return '';
 
-  // If it's just a URL string, return it directly
-  if (typeof media === 'string') return media;
+  // If it's a string, check if it's actually a URL and not just a Payload ID.
+  // Payload IDs are usually alphanumeric, while URLs start with http or /.
+  if (typeof media === 'string') {
+    if (media.startsWith('http') || media.startsWith('/')) {
+      return media;
+    }
+    return ''; // It's an ID, not a URL
+  }
 
   // Safe cast for checking nested properties
   const mediaObj = media as Record<string, unknown>;
 
-  // The payload-cloudinary plugin saves metadata in a 'cloudinary' object.
-  // We use type casting to access it since it might not be in the generated types yet.
-  const cloudinaryData = mediaObj.cloudinary as Record<string, unknown> | undefined;
-  if (cloudinaryData && typeof cloudinaryData.secure_url === 'string') {
-    return cloudinaryData.secure_url;
-  }
-
-  // Check if it's stored natively on the root object
-  if (typeof mediaObj.cloudinary_secure_url === 'string') {
+  // Priority 1: Check native cloudinary_secure_url field
+  if (typeof mediaObj.cloudinary_secure_url === 'string' && mediaObj.cloudinary_secure_url) {
     return mediaObj.cloudinary_secure_url;
   }
 
-  // Fall back to the default URL
-  return typeof mediaObj.url === 'string' ? mediaObj.url : '';
+  // Priority 2: Check nested cloudinary object from plugin
+  const cloudinaryData = mediaObj.cloudinary as Record<string, unknown> | undefined;
+  if (
+    cloudinaryData &&
+    typeof cloudinaryData.secure_url === 'string' &&
+    cloudinaryData.secure_url
+  ) {
+    return cloudinaryData.secure_url;
+  }
+
+  // Priority 3: Fall back to default URL only if it's NOT a local Payload URL
+  if (typeof mediaObj.url === 'string' && mediaObj.url) {
+    // If it's a local Payload media URL, it will be broken on Vercel's ephemeral filesystem.
+    // Return empty string to force the frontend's safe fallback placeholder.
+    if (mediaObj.url.startsWith('/api/media/file/')) {
+      return '';
+    }
+    return mediaObj.url;
+  }
+
+  return '';
 }

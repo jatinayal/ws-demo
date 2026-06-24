@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: ProgramPageProps) {
   return constructMetadata({
     title: program.meta?.title || program.title,
     description: program.meta?.description || program.shortDescription,
-    image: typeof program.meta?.image === 'object' ? getMediaUrl(program.meta.image) : undefined,
+    image: getMediaUrl(program.meta?.image) || undefined,
     path: `/programs/${slug}`,
   });
 }
@@ -79,6 +79,7 @@ export default async function ProgramDetailPage({ params }: ProgramPageProps) {
     collection: 'programs',
     where: { slug: { equals: slug } },
     limit: 1,
+    depth: 2,
   });
 
   if (!programs.docs.length) {

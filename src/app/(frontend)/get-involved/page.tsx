@@ -19,10 +19,7 @@ export async function generateMetadata() {
 
 export default async function GetInvolvedPage() {
   const data = await getGetInvolved();
-  const heroImage =
-    (typeof data.hero?.backgroundImage === 'object'
-      ? getMediaUrl(data.hero.backgroundImage)
-      : undefined) || undefined;
+  const heroImage = getMediaUrl(data.hero?.backgroundImage) || undefined;
 
   return (
     <div className="bg-background flex min-h-screen flex-col">

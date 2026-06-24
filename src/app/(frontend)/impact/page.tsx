@@ -55,18 +55,9 @@ export default async function ImpactPage() {
   });
   const globalStats = statsRes.docs;
 
-  const heroCover =
-    typeof impactData.hero?.coverImage === 'object'
-      ? getMediaUrl(impactData.hero.coverImage)
-      : null;
-  const mapImage =
-    typeof impactData.geographicReach?.mapImage === 'object'
-      ? getMediaUrl(impactData.geographicReach.mapImage)
-      : null;
-  const reportUrl =
-    typeof impactData.annualReport?.reportFile === 'object'
-      ? getMediaUrl(impactData.annualReport.reportFile)
-      : null;
+  const heroCover = getMediaUrl(impactData.hero?.coverImage) || null;
+  const mapImage = getMediaUrl(impactData.geographicReach?.mapImage) || null;
+  const reportUrl = getMediaUrl(impactData.annualReport?.reportFile) || null;
 
   return (
     <div className="flex min-h-screen flex-col">

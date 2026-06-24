@@ -304,10 +304,7 @@ export default async function AboutPage() {
           description="We collaborate with global organizations that share our vision for a more equitable future."
           partners={(partners as unknown as Partner[]).map((partner) => ({
             name: partner.name,
-            logo:
-              typeof partner.logo === 'object'
-                ? getMediaUrl(partner.logo) || '/placeholder.png'
-                : '/placeholder.png',
+            logo: getMediaUrl(partner.logo) || '/placeholder.png',
             websiteUrl: partner.websiteUrl || undefined,
           }))}
         />
@@ -320,10 +317,7 @@ export default async function AboutPage() {
           testimonials={(stories as unknown as SuccessStory[]).map((story) => ({
             personName: story.personName,
             quote: story.quote,
-            image:
-              typeof story.image === 'object'
-                ? getMediaUrl(story.image) || '/placeholder.png'
-                : '/placeholder.png',
+            image: getMediaUrl(story.image) || '/placeholder.png',
             program: typeof story.program === 'object' ? story.program?.title : undefined,
           }))}
         />

@@ -147,6 +147,13 @@ export const Events: CollectionConfig = {
       admin: { position: 'sidebar' },
     },
     {
+      name: 'relatedEvents',
+      type: 'relationship',
+      relationTo: 'events',
+      hasMany: true,
+      admin: { position: 'sidebar' },
+    },
+    {
       name: 'registrationSettings',
       type: 'group',
       admin: { position: 'sidebar' },
