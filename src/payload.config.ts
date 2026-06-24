@@ -1,6 +1,7 @@
 import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { cloudinaryStorage } from 'payload-cloudinary';
 import sharp from 'sharp';
 
 import { Users } from './collections/Users';
@@ -73,6 +74,19 @@ export default buildConfig({
     ContactPage,
     PrivacyPolicy,
     TermsOfService,
+  ],
+  plugins: [
+    cloudinaryStorage({
+      config: {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME || '',
+        api_key: process.env.CLOUDINARY_API_KEY || '',
+        api_secret: process.env.CLOUDINARY_API_SECRET || '',
+      },
+      collections: {
+        media: true,
+      },
+      folder: 'womens-synergy-media',
+    }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   db: postgresAdapter({
